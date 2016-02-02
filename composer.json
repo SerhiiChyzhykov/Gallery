@@ -1,19 +1,14 @@
 {
-    "name": "spalah/gallery",
-    "license": "proprietary",
+    "name": "symfony/framework-standard-edition",
+    "license": "MIT",
     "type": "project",
+    "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
-        "psr-4": {
-            "": "src/"
-        },
-        "files": [
-            "app/AppKernel.php"
-        ]
+        "psr-4": { "": "src/" },
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
+        "psr-4": { "Tests\\": "tests/" }
     },
     "require": {
         "php": ">=5.5.9",
@@ -58,6 +53,9 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "3.0-dev"
         }
     }
 }
