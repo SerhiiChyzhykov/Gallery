@@ -41,5 +41,11 @@ monolog:
         #    type:   chromephp
         #    level:  info
 
+<<<<<<< HEAD
+=======
+assetic:
+    use_controller: true
+
+>>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
 #swiftmailer:
 #    delivery_address: me@example.com

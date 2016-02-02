@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 /*
  * ************** CAUTION **************
  *
@@ -10,6 +11,8 @@
  * ************** CAUTION **************
  */
 
+=======
+>>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
 if (!isset($_SERVER['HTTP_HOST'])) {
     exit('This script cannot be run from the CLI. Run it from a browser.');
 }
@@ -22,7 +25,11 @@ if (!in_array(@$_SERVER['REMOTE_ADDR'], array(
     exit('This script is only accessible from localhost.');
 }
 
+<<<<<<< HEAD
 require_once dirname(__FILE__).'/../var/SymfonyRequirements.php';
+=======
+require_once dirname(__FILE__).'/../app/SymfonyRequirements.php';
+>>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
 
 $symfonyRequirements = new SymfonyRequirements();
 
@@ -35,6 +42,7 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="robots" content="noindex,nofollow" />
+<<<<<<< HEAD
         <title>Symfony Configuration Checker</title>
         <link rel="stylesheet" href="bundles/framework/css/structure.css" media="all" />
         <link rel="stylesheet" href="bundles/framework/css/body.css" media="all" />
@@ -115,6 +123,12 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
                 padding: 7px;
             }
         </style>
+=======
+        <title>Symfony Configuration</title>
+        <link rel="stylesheet" href="bundles/framework/css/structure.css" media="all" />
+        <link rel="stylesheet" href="bundles/framework/css/body.css" media="all" />
+        <link rel="stylesheet" href="bundles/sensiodistribution/webconfigurator/css/install.css" media="all" />
+>>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
     </head>
     <body>
         <div id="content">
@@ -148,10 +162,18 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
             <div class="sf-reset">
                 <div class="block">
                     <div class="symfony-block-content">
+<<<<<<< HEAD
                         <h1 class="title">Configuration Checker</h1>
                         <p>
                             This script analyzes your system to check whether is
                             ready to run Symfony applications.
+=======
+                        <h1 class="title">Welcome!</h1>
+                        <p>Welcome to your new Symfony project.</p>
+                        <p>
+                            This script will guide you through the basic configuration of your project.
+                            You can also do the same by editing the ‘<strong>app/config/parameters.yml</strong>’ file directly.
+>>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
                         </p>
 
                         <?php if (count($majorProblems)): ?>
@@ -188,10 +210,21 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
                         <?php endif; ?>
 
                         <?php if (!count($majorProblems) && !count($minorProblems)): ?>
+<<<<<<< HEAD
                             <p class="ok">All checks passed successfully. Your system is ready to run Symfony applications.</p>
                         <?php endif; ?>
 
                         <ul class="symfony-install-continue">
+=======
+                            <p class="ok">Your configuration looks good to run Symfony.</p>
+                        <?php endif; ?>
+
+                        <ul class="symfony-install-continue">
+                            <?php if (!count($majorProblems)): ?>
+                                <li><a href="app_dev.php/_configurator/">Configure your Symfony Application online</a></li>
+                                <li><a href="app_dev.php/">Bypass configuration and go to the Welcome page</a></li>
+                            <?php endif; ?>
+>>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
                             <?php if (count($majorProblems) || count($minorProblems)): ?>
                                 <li><a href="config.php">Re-check configuration</a></li>
                             <?php endif; ?>
