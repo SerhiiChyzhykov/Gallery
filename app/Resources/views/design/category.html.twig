@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+{% for i in [1,2,3,4] %}
+    {{ render(controller('AppBundle:Img:Category'))}}
+{% endfor %}
+
+{% endblock %}

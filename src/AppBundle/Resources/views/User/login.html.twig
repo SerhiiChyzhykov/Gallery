@@ -1,0 +1,9 @@
+{% extends "AppBundle:User:userform.html.twig" %}
+
+{% block action %}
+{{ path('login_check') }}
+{% endblock %}
+
+{% block form_title %}
+	Login
+{% endblock %}

@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -8,31 +7,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 $loader = require __DIR__.'/../app/autoload.php';
 include_once __DIR__.'/../var/bootstrap.php.cache';
-=======
-use Symfony\Component\ClassLoader\ApcClassLoader;
-use Symfony\Component\HttpFoundation\Request;
-
-$loader = require_once __DIR__.'/../app/bootstrap.php.cache';
->>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
 
 // Enable APC for autoloading to improve performance.
 // You should change the ApcClassLoader first argument to a unique prefix
 // in order to prevent cache key conflicts with other applications
 // also using APC.
 /*
-<<<<<<< HEAD
 $apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader(sha1(__FILE__), $loader);
-=======
-$apcLoader = new ApcClassLoader(sha1(__FILE__), $loader);
->>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
 $loader->unregister();
 $apcLoader->register(true);
 */
 
-<<<<<<< HEAD
-=======
-require_once __DIR__.'/../app/AppKernel.php';
->>>>>>> abedb3fc2114b77e4ce5c8c9b7534d89a80d56ef
 //require_once __DIR__.'/../app/AppCache.php';
 
 $kernel = new AppKernel('prod', false);
