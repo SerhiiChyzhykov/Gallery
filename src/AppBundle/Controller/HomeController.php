@@ -11,32 +11,33 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class HomeController extends Controller
 {
     /**
-     *@Route("/")
-     *@Route("/home",name="home")
+     *@Route("/",name="home")
      */
     public function indexAction(Request $request)
     {
 
-$repository = $this->getDoctrine()
-->getRepository('AppBundle:photo');
-$query = $repository->createQueryBuilder('p')
-->where('p.title LIKE :title')
-->orderBy('p.id','ASC')
-->setParameter('title','%'.$request->query->get('search').'%')
-->getQuery();
+ $message = [];
+      $data = $request->get('search');
+      $repository = $this->getDoctrine()
+      ->getRepository('AppBundle:photo');
+      $query = $repository->createQueryBuilder('p')
+      ->where('p.title LIKE :title')
+      ->setParameter('title','%'.$data.'%')
+      ->getQuery();
 
-$ser = $query->getResult();
+      $ser = $query->getResult();
 
+      if (!$ser) {
+       $message['danger'] = '
+Search No results: ' .$data;
+      }elseif(!empty($data)){ $message['success'] = '
+Search: ' .$data;}
 
-if (!$ser) {
-  throw $this->createNotFoundException(
-    'Photo no found for title '.$search
-    );
-}
 
 
 
 return $this->render('design/index.html.twig', array(
+  'message' =>$message,
   'photo' => $ser,
   'title' => 'Home',
   'url' => 'home',

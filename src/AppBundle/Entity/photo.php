@@ -147,7 +147,7 @@ class photo
      *
      * @return photo
      */
-    public function setCategories(\AppBundle\Entity\categories $categories = null)
+    public function setCategories(\AppBundle\Entity\categories $categories)
     {
         $this->categories = $categories;
 

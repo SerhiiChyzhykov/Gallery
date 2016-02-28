@@ -1,25 +1,34 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}
+Photo
+{% endblock %}
 {% block body %}
-
+<div class="messages">
+	{% for error in message %}
+	<div class="alert alert-danger">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>{{ error }}</strong>
+	</div>
+	{% endfor %}
+</div>
 <div class="row">
 
 	<div class="col-xs-1 col-sm-1 col-md-1 ">
 	</div>
 	{% for row in photo %}
-		<div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
-			<div class="thumbnail">
-				<img src='../{{row.image}}' width="600" hight="600" />
+	<div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+		<div class="thumbnail">
+			<img src='../{{row.image}}' width="600" hight="600" />
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{row.title}}</h3>
 			</div>
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<h3 class="panel-title">{{row.title}}</h3>
-				</div>
-				<div class="panel-body">
-					{{row.description}}
-				</div>
+			<div class="panel-body">
+				{{row.description}}
 			</div>
 		</div>
+	</div>
 	{% endfor %}
 	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
 		<div class="panel panel-warning">
@@ -27,26 +36,15 @@
 				<h3 class="panel-title">Comment form</h3>
 			</div>
 			<div class="panel-body">
-<form action="" method="POST" role="form">
-	<legend>Send message</legend>
-
-	<div class="form-group">
-		<label for="">Message:</label>
-		<input type="text" name="post" class="form-control" id="" placeholder="Input field">
-	</div>
-
-	
-
-	<button type="submit" name="send" class="btn btn-primary">Submit</button>
-</form>
-
-				
-					
-				
+				<form action="" method="POST" role="form" name="post">
+					<div class="form-group">
+						<label for="">Message:</label>
+						<input type="text" name="post" class="form-control" id="" required="required">
+					</div>
+					<button type="submit" name="send" class="btn btn-primary">Send</button>
+				</form>
 			</div>
-
 		</div>
-
 		<div class="panel-group" >
 			<div class="panel panel-info">
 				<div class="panel-heading">
@@ -56,19 +54,17 @@
 					{% for row in post %}
 					<p>
 						<span class="label label-{{ random(['default',
-                        'primary',
-                        'success', 
-                        'info',
-                        'warning', 
-                        'danger']) }} text-capitalize">{{ row.usernameId.username }}</span>
+						'primary',
+						'success', 
+						'info',
+						'warning', 
+						'danger']) }} text-capitalize">{{ row.usernameId.username }}</span>
 						<div class="world">{{ row.post }}</p><br/>
-						{% endfor %}
+							{% endfor %}
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-
-{% endblock %}
+	{% endblock %}

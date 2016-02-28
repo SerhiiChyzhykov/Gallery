@@ -2,9 +2,9 @@
 
 {% block body %}
 
-    <form action="{% block action %}{% endblock %}" method="POST"  role="form">
+    <form action="{% block action %}{% endblock %}" name="{% block form_title %}{% endblock %}" method="POST"  role="form">
 	
-			<legend>{% block form_title %}{% endblock %}</legend>
+			<legend>{% block title %}{% endblock %}</legend>
 	<div class="form-group">
 			<label for="" >Username:</label>
 

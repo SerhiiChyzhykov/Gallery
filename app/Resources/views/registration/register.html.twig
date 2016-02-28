@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Registration
+{% endblock %}
+{% block body %}
+<legend>Registration</legend>
+{{ form_start(form) }}
+<div class="form-group">
+	{{ form_row(form.username, { 'attr': {'class': 'form-control'} }) }}
+</div>
+<div class="form-group">
+	{{ form_row(form.password, { 'attr': {'class': 'form-control'} }) }}
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
+
+{{ form_end(form) }}
+
+{% endblock %}

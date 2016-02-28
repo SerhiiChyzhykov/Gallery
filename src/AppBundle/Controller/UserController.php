@@ -1,62 +1,55 @@
 <?php
 
 namespace AppBundle\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\UserType;
 use AppBundle\Entity\user;
 
 class UserController extends Controller
 {
- 
-    /**
-     *@Route("/register" , name = "register")
-     *@Template()
+
+ /**
+     * @Route("/register", name="user_registration")
      */
-    public function registrationAction(Request $request)
-    {
- $user = new User();
-        $form = $this->createForm(new UserType(), $user);
+ public function registerAction(Request $request)
+ {
+    $message = [];
+    $user = new User();
+    $form = $this->createForm(UserType::class, $user);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
 
-        // 2) handle the submit (will only happen on POST)
-        $form->handleRequest($request);
-        if ($form->isValid() && $form->isSubmitted()) {
-            // 3) Encode the password (you could also do this via Doctrine listener)
-            $password = $this->get('security.password_encoder')
-                ->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+        $password = $this->get('security.password_encoder')
+        ->encodePassword($user, $user->getPassword());
+        $user->setPassword($password);
 
-            // 4) save the User!
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
 
-            // ... do any other work - like send them an email, etc
-            // maybe set a "flash" success message for the user
-
-            return $this->redirectToRoute('home');
+        return $this->redirectToRoute('login');
     }
 
-        return $this->render(
-
-            'design/user.html.twig',
-            array(
+    return $this->render(
+        'registration/register.html.twig',
+        array(
+            'message' => $message,
             'title' => 'Registration',
-                'pages'=> '$pages',
-            'url'=> 'register',
-                'form' => $form->createView())
+            'form' => $form->createView())
         );
-
 }
-
 
         /**
      * @Route("/login_check", name="login_check")
       * @Template()
      */
-    public function checkAction(){}
+        public function checkAction(){}
+
 
 
     /**
@@ -65,11 +58,11 @@ class UserController extends Controller
      */
     public function loginAction(Request $request)
     {
-         return [];
-    }
+       return [];
+   }
         /**
          * @Template()
      * @Route("/logout", name="logout")
      */
-    public function logoutAction(){}
-}
+        public function logoutAction(){}
+    }

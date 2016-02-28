@@ -14,15 +14,10 @@ class user implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="post", mappedBy="user")
      */
     protected $post;
-         /**
-     * @ORM\OneToMany(targetEntity="message", mappedBy="user")
-     */
-    protected $message;
 
     public function __construct()
     {
         $this->post = new ArrayCollection();
-        $this->message = new ArrayCollection();
     }
     /**
      * @ORM\Column(type="integer")
@@ -163,39 +158,5 @@ class user implements UserInterface, \Serializable
     public function getPost()
     {
         return $this->post;
-    }
-
-    /**
-     * Add message
-     *
-     * @param \AppBundle\Entity\message $message
-     *
-     * @return user
-     */
-    public function addMessage(\AppBundle\Entity\message $message)
-    {
-        $this->message[] = $message;
-
-        return $this;
-    }
-
-    /**
-     * Remove message
-     *
-     * @param \AppBundle\Entity\message $message
-     */
-    public function removeMessage(\AppBundle\Entity\message $message)
-    {
-        $this->message->removeElement($message);
-    }
-
-    /**
-     * Get message
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMessage()
-    {
-        return $this->message;
     }
 }

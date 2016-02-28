@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Home{% endblock %}
 {% block body %}
-
+<div class="messages">
+	{% for key , m in message %}
+	<div class="alert alert-{{key}}">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>{{ m }}</strong>
+	</div>
+	{% endfor %}
+</div>
 <div class="content clearfix">
 	<div class="container">
 		{% for row in photo %}
