@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Controller;
+
 use AppBundle\Entity\user;
 use AppBundle\Entity\post;
 use AppBundle\Entity\photo;

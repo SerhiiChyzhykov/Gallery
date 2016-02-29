@@ -191,21 +191,24 @@ class ImgController extends Controller
     {
       $message = [] ;
       $users =  $this->get('security.token_storage')->getToken()->getUser();
+
       $send=$request->get('post');
-      
-      if(isset($send)) {
-        if (empty($id)) {
-          $post = new Post();
+
+
+
+   if(isset($send)) {
+     if ($users != "anon." ) {
+         $post = new Post();
           $em = $this->getDoctrine()->getManager();
           $post->setUsernameId($users);
           $post->setImageId($id);
           $post->setPost($send);
           $em->persist($post);
-          $em->flush();    
-        }else{
-          $message['danger'] = 'You are not registered!';
-        }
-      }
+          $sd = $em->flush(); 
+        }else{$message['danger'] = 'You are not registered!';}
+         }
+
+
 
       $repository = $this->getDoctrine()
       ->getRepository('AppBundle:post');
@@ -223,6 +226,7 @@ class ImgController extends Controller
       $photo = $repository->findById($id);
 
       return $this->render('design/img.html.twig', array(
+        'users'=>$users,
         'post' => $posts,
         'photo' => $photo,
         'message' => $message,
