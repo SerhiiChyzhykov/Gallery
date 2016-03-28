@@ -4,6 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -5527,13 +5528,13 @@ button.list-group-item-danger.active:focus {
   border-top-right-radius: 3px;
 }
 .panel-heading > .dropdown .dropdown-toggle {
-  color: inherit;
+  color: black;
 }
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 16px;
-  color: inherit;
+  color: black;
 }
 .panel-title > a,
 .panel-title > small,
