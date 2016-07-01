@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="messages">
+	{% for key , m in message %}
+	<div class="alert alert-{{key}}">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>{{ m }}</strong>
+	</div>
+	{% endfor %}
+</div>
+<div class="content clearfix">
+	<div class="container">
+		{% for row in pagination %}
+		<div class="col-xs-9 col-sm-5 col-md-4 col-lg-3">
+			<div class="thumbnail">
+				<a href='/photo/{{ row.id }}'>
+					<img src='/{{ row.image }}' width="400" hight="400" title='увеличить'></a>
+					<div class="caption">
+						<h3>{{ row.title }}</h3>
+
+						<span class="label label-{{ random(['default','success','info','warning','danger']) }}">
+
+							{{ row.categories.title }}</span>
+
+							<br/><br/>
+							<p>{{ row.description }}</p>
+							<p><a href='/photo/{{ row.id }}' class="btn btn-primary " >Full width</a>
+								<a href="/gallery?user={{ row.username.id }}" class="btn btn-default" role="button">User's album</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="navigation">
+			<center>
+				{{ knp_pagination_render(pagination) }}
+			</center>
+			</div>
+			{% endblock %}

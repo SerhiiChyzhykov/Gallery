@@ -1,0 +1,12 @@
+{% block form_row %}
+
+
+	    {{ form_errors(form) }}
+		<div class="form-group">
+	    {{ form_label(form) }}
+			<div class="col-sm-10">
+				<input type="text" name="" id="input" class="form-control" value="" required="	required" pattern="" title="">
+	    {{ form_widget(form) }}
+			</div>
+		</div>
+{% endblock %}
