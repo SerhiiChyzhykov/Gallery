@@ -1,0 +1,87 @@
+{% extends '/design/admin/header.html.twig' %}
+{% block body %}
+<div class="content-wrapper">
+	<div class="page-header">
+		<!-- Header content -->
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">User Pages</span> - Profile</h4>
+				<ul class="breadcrumb position-right">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="user_pages_profile.html">User pages</a></li>
+					<li class="active">Profile</li>
+				</ul>
+			</div>
+			<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+			<!-- /header content -->
+			<!-- Toolbar -->
+			<div class="navbar navbar-default navbar-component navbar-xs">
+				<ul class="nav navbar-nav visible-xs-block">
+					<li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+				</ul>
+				<div class="navbar-collapse collapse" id="navbar-filter">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true"><i class="icon-menu7 position-left"></i> Activity</a></li>
+						<li class=""><a href="#schedule" data-toggle="tab" aria-expanded="false"><i class="icon-calendar3 position-left"></i> Schedule <span class="badge badge-success badge-inline position-right">32</span></a></li>
+						<li class=""><a href="#settings" data-toggle="tab" aria-expanded="false"><i class="icon-cog3 position-left"></i> Settings</a></li>
+					</ul>
+					<div class="navbar-right">
+						<ul class="nav navbar-nav">
+							<li><a href="#"><i class="icon-stack-text position-left"></i> Notes</a></li>
+							<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
+							<li><a href="/my_photos"><i class="icon-images3 position-left"></i> Photos</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
+									<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
+									<li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
+									<li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- /toolbar -->
+		</div>
+		<!-- Content area -->
+		<div class="content">
+			<!-- Image grid -->
+			<h6 class="content-group text-semibold">
+				Image grid
+				<small class="display-block">Image grid with 4 - 2 - 1 columns</small>
+			</h6>
+			<div class="row">
+				{% for row in photo %}
+				<div class="col-lg-3 col-sm-6">
+					<div class="thumbnail">
+						<div class="thumb">
+							<img src="/{{row.image}}" alt="">
+							<div class="caption-overflow">
+								<span>
+									<a href="/{{row.image}}" data-popup="lightbox" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-plus3"></i></a>
+									<a href="#" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-link2"></i></a>
+								</span>
+							</div>
+						</div>
+						<div class="caption">
+							<h6 class="no-margin-top text-semibold"><a href="#" class="text-default">{{ row.title }}</a> <a href="#" class="text-muted"><i class="icon-download pull-right"></i></a></h6>
+							{{ row.description }}
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<!-- /video grid -->
+			<!-- Footer -->
+			<div class="footer text-muted">
+				© 2015
+			</div>
+			<!-- /footer -->
+		</div>
+		<!-- /content area -->
+	</div>
+	{% endblock %}
