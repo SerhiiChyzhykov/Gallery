@@ -252,7 +252,7 @@ class AdminController extends Controller
      */
     public function new_userAction(Request $request)
     {
-
+ $message=[];
       $user =  $this->get('security.token_storage')->getToken()->getUser();
 
       $username   = $request->get('username');
