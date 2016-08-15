@@ -1,0 +1,106 @@
+{% extends '/design/admin/header.html.twig' %}
+{% block body %}
+<div class="content">
+	<div class="page-header page-header-default">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Users</span></h4>
+			</div>
+			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+		</div>
+		<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+				<li>
+					<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
+				</li>
+				<li class="active"><i class="icon-users position-left"></i>Users</li>
+			</ul>
+			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+			<div class="navbar-right">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="/admin/new_user"><i class="icon-add position-left"></i> New</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+							<ul class="dropdown-menu dropdown-menu-right">
+								<li class="disabled">
+									<a href="#"><i class="icon-image2"></i> Update cover</a>
+								</li>
+								<li class="disabled">
+									<a href="#"><i class="icon-clippy"></i> Update info</a>
+								</li>
+								<li class="disabled">
+									<a href="#"><i class="icon-make-group"></i> Manage sections</a>
+								</li>
+								<li class="disabled"></li>
+								<li class="disabled">
+									<a href="#"><i class="icon-three-bars"></i> Activity log</a>
+								</li>
+								<li class="disabled">
+									<a href="#"><i class="icon-cog5"></i> Profile settings</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+		</div>
+
+	</div>
+	<div class="row">
+		{% for row in users %}
+		<div class="col-lg-3 col-md-6">
+			<div class="thumbnail">
+				<div class="thumb thumb-rounded">
+					{% if row.avatar == NULL %}
+					<img src="/img/user_icon.jpg">
+					{% else %}
+					<img src="{{row.avatar}}">
+					{% endif %}
+					<div class="caption-overflow">
+						<span>
+							{% if row.avatar == NULL %}
+							<a href="/img/user_icon.jpg" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
+							{% else %}
+							<a href="{{row.avatar}}" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
+							{% endif %}
+							{% if row.id == app.user.id %}
+							<a href="/admin/profile" class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
+							{% else %}
+							<a href="/admin/user/{{row.id}}" class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
+							{% endif %}
+						</span>
+					</div>
+				</div>
+				<div class="caption text-center"style="min-height: 100px; max-height: 100px;" >
+					<h6 class="text-semibold no-margin">{{row.username}}
+						{% if row.first_name != NULL or row.last_name != NULL %}
+						<small class="display-block">{{row.first_name}} {{row.last_name}}</small>
+						{% endif %}
+					</h6>
+					{% if row.git != NULL or row.google != NULL or row.twitter != NULL %}
+					<ul class="icons-list mt-15">
+						{% if row.google != NULL %}
+						<li>
+							<a href="{{row.google}}" data-popup="tooltip" title="" data-container="body" data-original-title="Google Drive"><i class="icon-google-drive"></i></a>
+						</li>
+						{% endif %}
+						{% if row.twitter != NULL %}
+						<li>
+							<a href="{{row.twitter}}" data-popup="tooltip" title="" data-container="body" data-original-title="Twitter"><i class="icon-twitter"></i></a>
+						</li>
+						{% endif %}
+						{% if row.git != NULL %}
+						<li>
+							<a href="{{row.git}}" data-popup="tooltip" title="" data-container="body" data-original-title="Github"><i class="icon-github"></i></a>
+						</li>
+						{% endif %}
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

@@ -1,15 +1,16 @@
 {% extends '/design/admin/header.html.twig' %}
 {% block body %}
 <div class="content-wrapper">
+	<!-- Page header -->
 	<div class="page-header">
 		<!-- Header content -->
 		<div class="page-header-content">
 			<div class="page-title">
-				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">User Pages</span> - Profile</h4>
+				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold"></span>{{user.username}} - Profile</h4>
 				<ul class="breadcrumb position-right">
 					<li><a href="index.html">Home</a></li>
-					<li><a href="user_pages_profile.html">User pages</a></li>
-					<li class="active">Profile</li>
+					<li><a href="user_pages_profile.html">User</a></li>
+					<li class="active">{{user.username}}</li>
 				</ul>
 			</div>
 			<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
@@ -21,24 +22,31 @@
 				</ul>
 				<div class="navbar-collapse collapse" id="navbar-filter">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true"><i class="icon-menu7 position-left"></i> Activity</a></li>
-						<li class=""><a href="#schedule" data-toggle="tab" aria-expanded="false"><i class="icon-calendar3 position-left"></i> Schedule <span class="badge badge-success badge-inline position-right">32</span></a></li>
-						<li class=""><a href="#settings" data-toggle="tab" aria-expanded="false"><i class="icon-cog3 position-left"></i> Settings</a></li>
+						<li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true"><i class="icon-menu7 position-left"></i> Activity</a>
+						</li>
+						<li class="disabled">
+							<a href="#schedule" data-toggle="tab" aria-expanded="false"><i class="icon-calendar3 position-left"></i> Schedule <span class="badge badge-success badge-inline position-right">32</span></a>
+						</li>
+						<li class="disabled">
+							<a href="#settings" data-toggle="tab" aria-expanded="false"><i class="icon-cog3 position-left"></i> Settings</a>
+						</li>
 					</ul>
 					<div class="navbar-right">
 						<ul class="nav navbar-nav">
-							<li><a href="#"><i class="icon-stack-text position-left"></i> Notes</a></li>
-							<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
-							<li><a href="/my_photos"><i class="icon-images3 position-left"></i> Photos</a></li>
+							<li class="disabled"><a href="#"><i class="icon-stack-text position-left"></i> Notes</a></li>
+							<li class="disabled"><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
+							{% for user in user %}
+							<li><a href="/admin/user/{{user.id}}/photos"><i class="icon-images3 position-left"></i> Photos</a></li>
+							{% endfor %}
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
 								<ul class="dropdown-menu dropdown-menu-right">
-									<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
-									<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
-									<li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
-									<li class="divider"></li>
-									<li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
-									<li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
+									<li class="disabled"><a href="#"><i class="icon-image2"></i> Update cover</a></li>
+									<li class="disabled"><a href="#"><i class="icon-clippy"></i> Update info</a></li>
+									<li class="disabled"><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
+									<li class="disabled" class="divider"></li>
+									<li class="disabled"><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
+									<li class="disabled"><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -68,7 +76,10 @@
 							</div>
 						</div>
 						<div class="caption" >
-							<h6 class="no-margin-top text-semibold"><a href="#" class="text-default">{{ row.title }}</a> <a href="#" class="text-muted"><i class="icon-download pull-right"></i></a></h6>
+							<h6 class="no-margin-top text-semibold"><a href="#" class="text-default">{{ row.title }}</a> 
+								<a href="?delete={{row.id}}" class="text-muted"><i class="icon-x pull-right"></i></a>
+								<a href="/{{row.image}}" class="text-muted" download><i class="icon-download pull-right"></i></a>
+							</h6>
 							{{ row.description }}
 						</div>
 					</div>

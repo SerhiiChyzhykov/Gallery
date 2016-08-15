@@ -1,0 +1,211 @@
+{% extends '/design/admin/header.html.twig' %}
+{% block body %}
+<div class="messages">
+	{% for key , m in message %}
+	<div class="alert alert-{{key}}">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>{{ m }}</strong>
+	</div>
+	{% endfor %}
+</div>
+<div class="content">
+	<div class="page-header page-header-default">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Users</span></h4>
+			</div>
+			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+		</div>
+		<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+				<li>
+					<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
+				</li>
+				<li class="active"><i class="icon-users position-left"></i>Users</li>
+			</ul>
+			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+			<div class="navbar-right">
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a href="/admin/new_user"><i class="icon-add position-left"></i> New</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li class="disabled">
+								<a href="#"><i class="icon-image2"></i> Update cover</a>
+							</li>
+							<li class="disabled">
+								<a href="#"><i class="icon-clippy"></i> Update info</a>
+							</li>
+							<li class="disabled">
+								<a href="#"><i class="icon-make-group"></i> Manage sections</a>
+							</li>
+							<li class="disabled"></li>
+							<li class="disabled">
+								<a href="#"><i class="icon-three-bars"></i> Activity log</a>
+							</li>
+							<li class="disabled">
+								<a href="#"><i class="icon-cog5"></i> Profile settings</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="tab-pane fade active in" id="settings">
+		<!-- Profile info -->
+		<div class="panel panel-flat">
+			<div class="panel-heading">
+				<h6 class="panel-title">Profile information</h6>
+				<div class="heading-elements">
+					<ul class="icons-list">
+						<li><a data-action="collapse"></a></li>
+						<li><a data-action="reload"></a></li>
+						<li><a data-action="close"></a></li>
+					</ul>
+				</div>
+				<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+				<div class="panel-body">
+					<form action="#">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="username">Username</label>
+									<input type="text"  class="form-control" required="required" name="username" id="username">
+								</div>
+								<div class="col-md-6">
+									<label for="password">Password</label>
+									<input type="password" class="form-control" required="required" name="password" id="password">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="first_name">First name</label>
+									<input type="text" class="form-control" required="required" name="first_name" id="first_name">
+								</div>
+								<div class="col-md-6">
+									<label for="last_name">Last name</label>
+									<input type="text" class="form-control" required="required" name="last_name" id="last_name">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-4">
+									<label for="twitter">Twitter</label>
+									<input type="text"  class="form-control" required="required" name="twitter" id="twitter">
+								</div>
+								<div class="col-md-4">
+									<label for="git">Github</label>
+									<input type="text" class="form-control" required="required" name="git" id="git">
+								</div>
+								<div class="col-md-4">
+									<label for="google">Google Drive</label>
+									<input type="text"  class="form-control" required="required" name="google" id="google">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label>Email</label>
+									<input type="text" readonly="readonly"  class="form-control">
+								</div>
+								<div class="col-md-6">
+									<label>Your country</label>
+									<select class="select select2-hidden-accessible" tabindex="-1" aria-hidden="true" readonly="readonly">
+										<option  selected="selected">Germany</option> 
+										<option value="france">France</option> 
+										<option value="spain">Spain</option> 
+										<option value="netherlands">Netherlands</option> 
+										<option value="other">...</option> 
+										<option value="uk">United Kingdom</option> 
+									</select>
+									<span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;">
+										<span class="selection">
+											<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-uyxf-container">
+												<span class="select2-selection__rendered" id="select2-uyxf-container" title="Germany">Germany</span>
+												<span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+											</span>
+										</span>
+										<span class="dropdown-wrapper" aria-hidden="true"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label>Phone #</label>
+									<input type="text"  class="form-control" readonly="readonly">
+									<span class="help-block">+99-99-9999-9999</span>
+								</div>
+								<div class="col-md-6">
+									<label for="avatar" class="display-block">Upload profile image</label>
+									<div class="uploader">
+										<input type="file" class="file-styled" name="avatar" id="avatar">
+										<span class="filename" style="-webkit-user-select: none;">No file selected</span>
+										<span class="action btn bg-warning" style="-webkit-user-select: none;">Choose File</span>
+									</div>
+									<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+								</div>
+							</div>
+						</div>
+						<div class="text-right">
+							<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /profile info -->
+			<!-- Account settings -->
+			<div class="panel panel-flat">
+				<div class="panel-heading">
+					<h6 class="panel-title">Account settings</h6>
+					<div class="heading-elements">
+						<ul class="icons-list">
+							<li><a data-action="collapse"></a></li>
+							<li><a data-action="reload"></a></li>
+							<li><a data-action="close"></a></li>
+						</ul>
+					</div>
+					<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+					<div class="panel-body">
+						<form action="#">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label>Username</label>
+										<input type="text" value="Kopyov" readonly="readonly" class="form-control">
+									</div>
+									<div class="col-md-6">
+										<label>Current password</label>
+										<input type="password" value="password" readonly="readonly" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label>New password</label>
+										<input type="password" placeholder="Enter new password" class="form-control"  readonly="readonly" >
+									</div>
+									<div class="col-md-6">
+										<label>Repeat password</label>
+										<input type="password" placeholder="Repeat new password" class="form-control"  readonly="readonly" >
+									</div>
+								</div>
+							</div>
+							<div class="text-right">
+								<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /account settings -->
+			</div>
+			{% endblock %}
