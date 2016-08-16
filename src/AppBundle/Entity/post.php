@@ -42,7 +42,12 @@ class post
      */
     private $imageId;
 
-
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
 
     /**
      * Get id
@@ -76,6 +81,30 @@ class post
     public function getPost()
     {
         return $this->post;
+    }
+
+      /**
+     * Set date
+     *
+     * @param date $date
+     *
+     * @return date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return date
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 
     /**

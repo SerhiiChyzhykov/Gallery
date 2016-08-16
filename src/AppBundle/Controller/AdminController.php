@@ -32,6 +32,16 @@ class AdminController extends Controller
       ->setMaxResults(4)
       ->getQuery()
       ->getResult();
+
+      $comments = $this->getDoctrine()
+      ->getRepository('AppBundle:post')
+      ->createQueryBuilder('p')
+      ->orderBy('p.id', 'DESC')
+      ->setMaxResults(5)
+      ->getQuery()
+      ->getResult();
+
+      $date = date('Y-m-d');
       /* $ser = $query
      $paginator  = $this->get('knp_paginator');
       $pagination = $paginator->paginate(
@@ -58,14 +68,17 @@ class AdminController extends Controller
 
     #$photos = $qb->getQuery()->getSingleScalarResult();
     endif;
-     if($user->role >= 2):
+
+    if($user->role >= 2):
       return $this->render('design/admin/index.html.twig', array(
-       'message' =>$message,
-       'title' => 'Dashboard',
-       'url' => 'home',
-       'photos' => $photos ,
-       'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-       ));
+        'message'   =>  $message,
+        'title'     =>  'Dashboard',
+        'url'       =>  'home',
+        'comments'  =>  $comments,
+        'photos'    =>  $photos ,
+        'date'      =>  $date,
+        'base_dir'  =>  realpath($this->container->getParameter('kernel.root_dir').'/..'),
+        ));
     else:
       return $this->redirectToRoute('home');
     endif;
@@ -105,7 +118,7 @@ class AdminController extends Controller
       $photos = $qb->getQuery()->getSingleScalarResult();
 
 
-       if($user->role >= 2):
+      if($user->role >= 2):
         return $this->render('design/admin/admin.user.html.twig', array(
          'user'     => $user_profile,
          'photo'    => $photo,
@@ -129,7 +142,7 @@ class AdminController extends Controller
       $query = $repository->createQueryBuilder('p')->getQuery();
       $users = $query->getResult();
 
-       if($user->role >= 2):
+      if($user->role >= 2):
         return $this->render('design/admin/admin.users.html.twig', array(
          'users' => $users,
          'title' => 'Users',
@@ -174,7 +187,7 @@ class AdminController extends Controller
       $photos = $qb->getQuery()->getSingleScalarResult();
 
 
-       if($user->role >= 2):
+      if($user->role >= 2):
         return $this->render('design/admin/admin.user.html.twig', array(
          'user'     => $user_profile,
          'photo'    => $photo,
@@ -209,7 +222,7 @@ class AdminController extends Controller
       return $this->redirectToRoute('admin_photos');
       endif;
       
-       if($user->role >= 2):
+      if($user->role >= 2):
         return $this->render('design/admin/admin.photos.html.twig', array(
          'photo' => $photo,
          'user' => $user,
@@ -298,7 +311,7 @@ class AdminController extends Controller
     }
   }
 
-   if($user->role >= 2){
+  if($user->role >= 2){
     return $this->render('design/admin/admin.new_user.html.twig', array(
      'user' => $user,
      'title' => 'New User',
