@@ -70,7 +70,7 @@ class user implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="integer", length=10)
      */
-    private $rank;
+    private $role;
 
     public function getUsername()
     {
@@ -238,6 +238,30 @@ class user implements UserInterface, \Serializable
     public function setfirst_name($first_name)
     {
         $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return integer
+     */
+        public function getrole()
+        {
+            return $this->role;
+        }
+
+    /**
+     * Set role
+     *
+     * @param integer $role
+     *
+     * @return role
+     */
+    public function setrole($role)
+    {
+        $this->role = $role;
 
         return $this;
     }

@@ -1,0 +1,50 @@
+{% extends '/design/admin/header.html.twig' %}
+{% block body %}
+<div class="content">
+
+	<div class="page-header page-header-default">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Photos</span></h4>
+			</div>
+			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+		</div>
+		<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+				<li><a href="/admin"><i class="icon-home2 position-left"></i> Home</a></li>
+				<li class="active"><i class="icon-images3 position-left"></i> Photos</li>
+			</ul>
+			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+		</div>
+	</div>
+
+		<!-- /header content -->
+		<!-- Content area -->
+		<div class="content">
+			<!-- Image grid -->
+			<div class="row">
+				{% for row in photo %}
+				<div class="col-lg-3 col-sm-6" >
+					<div class="thumbnail">
+						<div class="thumb" style="min-height: 250px;">
+							<img src="/{{row.image}}" style="height: 220px;">
+							<div class="caption-overflow" style="height: 220px;">
+								<span>
+									<a href="/{{row.image}}" data-popup="lightbox" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-plus3"></i></a>
+									<a href="#" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-link2"></i></a>
+								</span>
+							</div>
+						</div>
+						<div class="caption" >
+							<h6 class="no-margin-top text-semibold"><a href="#" class="text-default">{{ row.title }}</a> 
+								<a href="?delete={{row.id}}" class="text-muted"><i class="icon-x pull-right"></i></a>
+								<a href="/{{row.image}}" class="text-muted" download><i class="icon-download pull-right"></i></a>
+							</h6>
+							{{ row.description }}
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<!-- /video grid -->
+	{% endblock %}
