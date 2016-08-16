@@ -24,16 +24,16 @@ class AdminController extends Controller
     {
 
       $message = [];
-      $data = $request->get('search');
-      $repository = $this->getDoctrine()
-      ->getRepository('AppBundle:photo');
-      $query = $repository->createQueryBuilder('p')
-      ->where('p.title LIKE :title')
-      ->setParameter('title','%'.$data.'%')
-      ->getQuery();
 
-      $ser = $query->getResult();
-      $paginator  = $this->get('knp_paginator');
+      $photos = $this->getDoctrine()
+      ->getRepository('AppBundle:photo')
+      ->createQueryBuilder('p')
+      ->orderBy('p.id', 'DESC')
+      ->setMaxResults(4)
+      ->getQuery()
+      ->getResult();
+      /* $ser = $query
+     $paginator  = $this->get('knp_paginator');
       $pagination = $paginator->paginate(
         $ser,$request->query->getInt('page', 1),8);
 
@@ -42,6 +42,7 @@ class AdminController extends Controller
        Search No results: ' .$data;
      }elseif(!empty($data)){ $message['success'] = '
      Search: ' .$data;}
+*/
 
      $user = $this->user();
 
@@ -55,7 +56,7 @@ class AdminController extends Controller
     $qb->where('a.username = :usernameId');
     $qb->setParameter('usernameId', $user);
 
-    $photos = $qb->getQuery()->getSingleScalarResult();
+    #$photos = $qb->getQuery()->getSingleScalarResult();
     endif;
      if($user->role >= 2):
       return $this->render('design/admin/index.html.twig', array(
@@ -63,7 +64,6 @@ class AdminController extends Controller
        'title' => 'Dashboard',
        'url' => 'home',
        'photos' => $photos ,
-       'pagination' => $pagination,
        'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
        ));
     else:
