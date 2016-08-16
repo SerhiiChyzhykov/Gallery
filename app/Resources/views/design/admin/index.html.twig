@@ -34,17 +34,16 @@
 				<div class="col-lg-3 col-sm-6">
 					<div class="thumbnail">
 						<div class="thumb">
-							<img src="" alt="">
+							<img src="{{row.image}}">
 							<div class="caption-overflow">
 								<span>
-									<a href="assets/images/demo/flat/1.png" data-popup="lightbox" rel="gallery" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-plus3"></i></a>
-									<a href="#" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-link2"></i></a>
+									<a href="#" data-popup="lightbox" rel="gallery" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-plus3"></i></a>
+									<a href="/photo/{{row.id}}" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-link2"></i></a>
 								</span>
 							</div>
 						</div>
 					</div>
 				</div>
-				{{row.id}}
 				{% endfor %}
 			</div>
 			<!-- /daily financials -->
