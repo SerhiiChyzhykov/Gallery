@@ -57,7 +57,7 @@ class AdminController extends Controller
 
     $photos = $qb->getQuery()->getSingleScalarResult();
     endif;
-    if($user != 'anon'):
+     if($user->role >= 2):
       return $this->render('design/admin/index.html.twig', array(
        'message' =>$message,
        'title' => 'Dashboard',
@@ -105,7 +105,7 @@ class AdminController extends Controller
       $photos = $qb->getQuery()->getSingleScalarResult();
 
 
-      if($user != 'anon'):
+       if($user->role >= 2):
         return $this->render('design/admin/admin.user.html.twig', array(
          'user'     => $user_profile,
          'photo'    => $photo,
@@ -119,31 +119,6 @@ class AdminController extends Controller
     }
 
     /**
-     *@Route("/admin/profile/photo",name="admin_my_photo")
-    
-    public function  my_photosAction(Request $request)
-    {
-      $user = $this->user();
-      $repository = $this->getDoctrine()
-      ->getRepository('AppBundle:photo');
-      $query = $repository->createQueryBuilder('p')
-      ->where('p.username = :id')
-      ->setParameter('id',$user)
-      ->getQuery();
-      $photo = $query->getResult();
-
-      if($user != 'anon'):
-        return $this->render('design/admin/my_photos.html.twig', array(
-         'photo' => $photo,
-         'title' => '$user',
-         'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-         ));
-      else:
-        return $this->redirectToRoute('home');
-      endif;
-    }
- */
-    /**
      *@Route("/admin/users",name="admin_users")
      */
     public function  usersAction(Request $request)
@@ -154,7 +129,7 @@ class AdminController extends Controller
       $query = $repository->createQueryBuilder('p')->getQuery();
       $users = $query->getResult();
 
-      if($user != 'anon'):
+       if($user->role >= 2):
         return $this->render('design/admin/admin.users.html.twig', array(
          'users' => $users,
          'title' => 'Users',
@@ -199,7 +174,7 @@ class AdminController extends Controller
       $photos = $qb->getQuery()->getSingleScalarResult();
 
 
-      if($user != 'anon'):
+       if($user->role >= 2):
         return $this->render('design/admin/admin.user.html.twig', array(
          'user'     => $user_profile,
          'photo'    => $photo,
@@ -234,7 +209,7 @@ class AdminController extends Controller
       return $this->redirectToRoute('admin_photos');
       endif;
       
-      if($user != 'anon'):
+       if($user->role >= 2):
         return $this->render('design/admin/admin.photos.html.twig', array(
          'photo' => $photo,
          'user' => $user,
@@ -320,21 +295,22 @@ class AdminController extends Controller
           }else{$message['danger'] = "You can not download the file. Check permissions to the directory ( read / write)";}
         }else{$message['danger'] = "File with this name already exists";}
       }else{$message['danger'] = "You can upload files : JPEG, GIF, BMP, PNG";}
-    }else{$message['danger'] = "2";}
+    }
   }
 
-  if($user != 'anon'):
+   if($user->role >= 2){
     return $this->render('design/admin/admin.new_user.html.twig', array(
      'user' => $user,
      'title' => 'New User',
      'message' => $message,
      'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
      ));
-  else:
+  }
+  else{
     return $this->redirectToRoute('home');
-  endif;
+  }
+  
 }
-
 
     /**
      *@Route("/admin/edit_user/{id}",name="admin_edit_user")
@@ -406,10 +382,10 @@ class AdminController extends Controller
           }else{$message['danger'] = "You can not download the file. Check permissions to the directory ( read / write)";}
         }else{$message['danger'] = "File with this name already exists";}
       }else{$message['danger'] = "You can upload files : JPEG, GIF, BMP, PNG";}
-    }else{$message['danger'] = "2";}
+    }
   }
 
-  if($user != 'anon'):
+  if($user->role >= 2):
     return $this->render('design/admin/admin.edit_user.html.twig', array(
      'user' => $user,
      'title' => 'Edit User',

@@ -70,7 +70,7 @@ class user implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="integer", length=10)
      */
-    private $role;
+    public $role;
 
     public function getUsername()
     {

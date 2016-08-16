@@ -61,7 +61,7 @@
 							{% if row.avatar == NULL %}
 							<a href="/admin/edit_user/{{row.id}}" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-pencil3"></i></a>
 							{% else %}
-							<a href="{{row.avatar}}" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-pencil3"></i></a>
+							<a href="/admin/edit_user/{{row.id}}" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-pencil3"></i></a>
 							{% endif %}
 							{% if row.id == app.user.id %}
 							<a href="/admin/profile" class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
