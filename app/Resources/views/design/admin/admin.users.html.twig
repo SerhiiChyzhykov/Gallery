@@ -17,35 +17,34 @@
 			</ul>
 			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
 			<div class="navbar-right">
-					<ul class="nav navbar-nav">
-						<li class="active">
-							<a href="/admin/new_user"><i class="icon-add position-left"></i> New</a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li class="disabled">
-									<a href="#"><i class="icon-image2"></i> Update cover</a>
-								</li>
-								<li class="disabled">
-									<a href="#"><i class="icon-clippy"></i> Update info</a>
-								</li>
-								<li class="disabled">
-									<a href="#"><i class="icon-make-group"></i> Manage sections</a>
-								</li>
-								<li class="disabled"></li>
-								<li class="disabled">
-									<a href="#"><i class="icon-three-bars"></i> Activity log</a>
-								</li>
-								<li class="disabled">
-									<a href="#"><i class="icon-cog5"></i> Profile settings</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a href="/admin/new_user"><i class="icon-add position-left"></i> New</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li class="disabled">
+								<a href="#"><i class="icon-image2"></i> Update cover</a>
+							</li>
+							<li class="disabled">
+								<a href="#"><i class="icon-clippy"></i> Update info</a>
+							</li>
+							<li class="disabled">
+								<a href="#"><i class="icon-make-group"></i> Manage sections</a>
+							</li>
+							<li class="disabled"></li>
+							<li class="disabled">
+								<a href="#"><i class="icon-three-bars"></i> Activity log</a>
+							</li>
+							<li class="disabled">
+								<a href="#"><i class="icon-cog5"></i> Profile settings</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
-
 	</div>
 	<div class="row">
 		{% for row in users %}
@@ -53,16 +52,16 @@
 			<div class="thumbnail">
 				<div class="thumb thumb-rounded">
 					{% if row.avatar == NULL %}
-					<img src="/img/user_icon.jpg">
+					<img src="/img/user_icon.jpg" >
 					{% else %}
-					<img src="{{row.avatar}}">
+					<img src="{{row.avatar}}" >
 					{% endif %}
 					<div class="caption-overflow">
 						<span>
 							{% if row.avatar == NULL %}
-							<a href="/img/user_icon.jpg" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
+							<a href="/admin/edit_user/{{row.id}}" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-pencil3"></i></a>
 							{% else %}
-							<a href="{{row.avatar}}" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
+							<a href="{{row.avatar}}" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-pencil3"></i></a>
 							{% endif %}
 							{% if row.id == app.user.id %}
 							<a href="/admin/profile" class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>

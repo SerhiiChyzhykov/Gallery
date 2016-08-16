@@ -12,6 +12,7 @@
 	<link href="/css/admin/components.css" rel="stylesheet" type="text/css">
 	<link href="/css/admin/colors.css" rel="stylesheet" type="text/css">
 	<link href="/css/admin/octicons.css" rel="stylesheet" type="text/css">
+	
 	<!-- /global stylesheets -->
 	<!-- Core JS files -->
 	<script type="text/javascript" src="/js/admin/pace.min.js"></script>
@@ -153,7 +154,7 @@
 				</li>
 				<li class="dropdown dropdown-user">
 					<a class="dropdown-toggle" data-toggle="dropdown">
-						{% if app.user.avatar == NULL %}
+						{% if app.user.avatar == NULL  %}
 						<img src="/img/user_icon.jpg" class="img-circle img-sm" >
 						{% else %}
 						<img src="{{app.user.avatar}}" class="img-circle img-sm" >

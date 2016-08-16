@@ -161,7 +161,7 @@ class user implements UserInterface, \Serializable
      *
      * @param string $avatar
      *
-     * @return user
+     * @return avatar
      */
     public function setavatar($avatar)
     {

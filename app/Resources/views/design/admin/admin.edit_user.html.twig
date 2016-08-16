@@ -1,0 +1,180 @@
+{% extends '/design/admin/header.html.twig' %}
+{% block body %}
+<div class="content">
+	<div class="page-header page-header-default">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">New User</span></h4>
+			</div>
+			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+		</div>
+		<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+				<li>
+					<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
+				</li>
+				<li class="active"><i class="icon-user position-left"></i>Edit User</li>
+			</ul>
+			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+			<div class="navbar-right">
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a href="/admin/new_user"><i class="icon-add position-left"></i> New</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="messages">
+		{% for key , m in message %}
+		<div class="alert alert-{{key}}">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>{{ m }}</strong>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="tab-pane fade active in" id="settings">
+		<!-- Profile info -->
+		<div class="panel panel-flat">
+			<div class="panel-heading">
+				<h6 class="panel-title">Profile information</h6>
+				<div class="heading-elements">
+					<ul class="icons-list">
+						<li><a data-action="collapse"></a></li>
+						<li><a data-action="reload"></a></li>
+						<li><a data-action="close"></a></li>
+					</ul>
+				</div>
+				<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+				<div class="panel-body">
+				{% for row in db_username %}
+					<form enctype="multipart/form-data" method="POST">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="username">Username</label>
+									<input type="text"  class="form-control" value="{{row.username}}" required="required" name="username" id="username">
+								</div>
+								<div class="col-md-6">
+									<label for="password">Password</label>
+									<input type="password" class="form-control"  required="required" name="password" id="password">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="first_name">First name</label>
+									<input type="text" class="form-control" value="{{row.first_name}}" required="required" name="first_name" id="first_name">
+								</div>
+								<div class="col-md-6">
+									<label for="last_name">Last name</label>
+									<input type="text" class="form-control" value="{{row.last_name}}" required="required" name="last_name" id="last_name">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-4">
+									<label for="twitter">Twitter</label>
+									<input type="text"  class="form-control" value="{{row.twitter}}" required="required" name="twitter" id="twitter">
+								</div>
+								<div class="col-md-4">
+									<label for="git">Github</label>
+									<input type="text" class="form-control" value="{{row.git}}" required="required" name="git" id="git">
+								</div>
+								<div class="col-md-4">
+									<label for="google">Google Drive</label>
+									<input type="text"  class="form-control" value="{{row.google}}" required="required" name="google" id="google">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label>Email</label>
+									<input type="text" readonly="readonly"  class="form-control">
+								</div>
+								<div class="col-md-6">
+									<label for="role">Role</label>
+									<select class="form-control" required="required" name="role" id="role">
+										<option value="1" {% if row.role == 1 %} selected="selected" {% endif %}>User</option>
+										<option value="2" {% if row.role == 2 %} selected="selected" {% endif %}>Moderator</option> 
+										<option value="3" {% if row.role == 3 %} selected="selected" {% endif %}>Admin</option> 
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label>Phone #</label>
+									<input type="text"  class="form-control" readonly="readonly">
+									<span class="help-block">+99-99-9999-9999</span>
+								</div>
+								<div class="col-md-6">
+									<label for="image" class="display-block">Upload profile image</label>
+									<div class="uploader">
+										<input type="file" class="file-styled" name="image" id="image">
+										<span class="filename" style="-webkit-user-select: none;">No file selected</span>
+										<span class="action btn bg-warning" style="-webkit-user-select: none;">Choose File</span>
+									</div>
+									<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+								</div>
+							</div>
+						</div>
+						<div class="text-right">
+							<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+						</div>
+					</form>
+					{% endfor %}
+				</div>
+			</div>
+			<!-- /profile info -->
+			<!-- Account settings -->
+			<div class="panel panel-flat">
+				<div class="panel-heading">
+					<h6 class="panel-title">Account settings</h6>
+					<div class="heading-elements">
+						<ul class="icons-list">
+							<li><a data-action="collapse"></a></li>
+							<li><a data-action="reload"></a></li>
+							<li><a data-action="close"></a></li>
+						</ul>
+					</div>
+					<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+					<div class="panel-body">
+						<form action="#">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label>Username</label>
+										<input type="text" value="Kopyov" readonly="readonly" class="form-control">
+									</div>
+									<div class="col-md-6">
+										<label>Current password</label>
+										<input type="password" value="password" readonly="readonly" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label>New password</label>
+										<input type="password" placeholder="Enter new password" class="form-control"  readonly="readonly" >
+									</div>
+									<div class="col-md-6">
+										<label>Repeat password</label>
+										<input type="password" placeholder="Repeat new password" class="form-control"  readonly="readonly" >
+									</div>
+								</div>
+							</div>
+							<div class="text-right">
+								<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /account settings -->
+			</div>
+			{% endblock %}

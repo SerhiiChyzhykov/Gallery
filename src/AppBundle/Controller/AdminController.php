@@ -273,7 +273,7 @@ class AdminController extends Controller
         return 1;
       return 0;
     }
-    $db_username = 'test';
+
     if (isset($_FILES['image'])) {
       if (!empty($_FILES['image'])) {
         if (is_valid_type($_FILES['image'])){
@@ -304,9 +304,9 @@ class AdminController extends Controller
                   $user->setgoogle($google);
                   $user->setgit($git);
                   $user->setrole($role);
-                  $password = $this->get('security.password_encoder')
-                  ->encodePassword($user, $user->getPassword());
-                  $user->setPassword($password);
+                  $passwords = $this->get('security.password_encoder')
+                  ->encodePassword($user,$password);
+                  $user->setPassword($passwords);
                   $user->setfirst_name($first_name);
                   $user->setavatar('/img/avatar/'.$filename. '.' . $extension);
                   $em->persist($user);
@@ -326,8 +326,94 @@ class AdminController extends Controller
   if($user != 'anon'):
     return $this->render('design/admin/admin.new_user.html.twig', array(
      'user' => $user,
-     'db_username' => $db_username,
      'title' => 'New User',
+     'message' => $message,
+     'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+     ));
+  else:
+    return $this->redirectToRoute('home');
+  endif;
+}
+
+
+    /**
+     *@Route("/admin/edit_user/{id}",name="admin_edit_user")
+     */
+    public function edit_userAction(Request $request,$id)
+    {
+     $message=[];
+     $user = $this->user();
+
+     $username   = $request->get('username');
+     $last_name  = $request->get('last_name');
+     $first_name = $request->get('first_name');
+     $twitter = $request->get('twitter');
+     $password = $request->get('password');
+     $git = $request->get('git');
+     $google = $request->get('google');
+     $avatar = $request->get('image');
+     $role = $request->get('role');
+
+     function is_valid_type($file)
+     {
+
+      $valid_types = array("image/jpg","image/jpeg", "image/bmp", "image/gif", "image/png");
+
+      if (in_array($file['type'], $valid_types))
+        return 1;
+      return 0;
+    }
+    $em = $this->getDoctrine()->getManager();
+    $query = $em->createQuery(
+      'SELECT p
+      FROM AppBundle:user p
+      WHERE p.id = :id'
+      )->setParameter('id', $id);
+
+    $db_username = $query->getResult();
+
+    if (isset($_FILES['image'])) {
+      if (!empty($_FILES['image'])) {
+        if (is_valid_type($_FILES['image'])){
+          if (!file_exists($_FILES['image']['name'])){
+            $extension = strtolower(substr(strrchr($_FILES['image']['name'], '.'), 1));
+            $filename = DFileHelper::getRandomFileName($extension);
+            $target =  'img/avatar/' . $filename . '.' . $extension;
+            if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
+             if(isset($username) && isset($last_name) && isset($first_name) && isset($twitter) && isset($password) && isset($git) && isset($google)){
+              if(!empty($username) && !empty($last_name) && !empty($first_name) && !empty($twitter) && !empty($password) && !empty($git) && !empty($google)){
+
+                $em = $this->getDoctrine()->getManager();
+                $user = $em->getRepository('AppBundle:user')->find($id);
+                $user->setUsername($username);
+                $user->setlast_name($last_name);
+                $user->settwitter($twitter);
+                $user->setgoogle($google);
+                $user->setgit($git);
+                $user->setrole($role);
+                $passwords = $this->get('security.password_encoder')
+                ->encodePassword($user,$password);
+                $user->setPassword($passwords);
+                $user->setfirst_name($first_name);
+                $user->setavatar('/img/avatar/'.$filename. '.' . $extension);
+                $em->persist($user);
+                $em->flush();
+
+                $message['success'] = "User updated";
+
+              }else{$message['danger'] = "Somsing missing";}
+            }else{$message['danger'] = "Somsing missing";}
+          }else{$message['danger'] = "You can not download the file. Check permissions to the directory ( read / write)";}
+        }else{$message['danger'] = "File with this name already exists";}
+      }else{$message['danger'] = "You can upload files : JPEG, GIF, BMP, PNG";}
+    }else{$message['danger'] = "2";}
+  }
+
+  if($user != 'anon'):
+    return $this->render('design/admin/admin.edit_user.html.twig', array(
+     'user' => $user,
+     'title' => 'Edit User',
+     'db_username' => $db_username,
      'message' => $message,
      'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
      ));
