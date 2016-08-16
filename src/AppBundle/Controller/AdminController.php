@@ -23,8 +23,6 @@ class AdminController extends Controller
     public function homeAction(Request $request)
     {
 
-      $message = [];
-
       $photos = $this->getDoctrine()
       ->getRepository('AppBundle:photo')
       ->createQueryBuilder('p')
@@ -42,47 +40,29 @@ class AdminController extends Controller
       ->getResult();
 
       $date = date('Y-m-d');
-      /* $ser = $query
-     $paginator  = $this->get('knp_paginator');
-      $pagination = $paginator->paginate(
-        $ser,$request->query->getInt('page', 1),8);
 
-      if (!$ser) {
-       $message['danger'] = '
-       Search No results: ' .$data;
-     }elseif(!empty($data)){ $message['success'] = '
-     Search: ' .$data;}
-*/
+      if($delete = $request->get('delete')){
+        $em = $this->getDoctrine()->getManager();
+        $delete = $em->getRepository('AppBundle:post')->findOneById($delete);
+        $em->remove($delete);
+        $em->flush();
+        return $this->redirectToRoute('admin');
+      }
 
-     $user = $this->user();
+      $user = $this->user();
 
-     if($user):
-
-      $repo = $this->getDoctrine()->getManager()
-    ->getRepository('AppBundle:photo');
-
-    $qb = $repo->createQueryBuilder('a');
-    $qb->select('COUNT(a)');
-    $qb->where('a.username = :usernameId');
-    $qb->setParameter('usernameId', $user);
-
-    #$photos = $qb->getQuery()->getSingleScalarResult();
-    endif;
-
-    if($user->role >= 2):
-      return $this->render('design/admin/index.html.twig', array(
-        'message'   =>  $message,
-        'title'     =>  'Dashboard',
-        'url'       =>  'home',
-        'comments'  =>  $comments,
-        'photos'    =>  $photos ,
-        'date'      =>  $date,
-        'base_dir'  =>  realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ));
-    else:
-      return $this->redirectToRoute('home');
-    endif;
-  }
+      if($user->role >= 2):
+        return $this->render('design/admin/index.html.twig', array(
+         'title'     =>  'Dashboard',
+         'comments'  =>  $comments,
+         'photos'    =>  $photos ,
+         'date'      =>  $date,
+         'base_dir'  =>  realpath($this->container->getParameter('kernel.root_dir').'/..'),
+         ));
+      else:
+        return $this->redirectToRoute('home');
+      endif;
+    }
 
      /**
      *@Route("/admin/profile",name="admin_profile")
@@ -410,6 +390,8 @@ class AdminController extends Controller
     return $this->redirectToRoute('home');
   endif;
 }
+
+
 
 }
 

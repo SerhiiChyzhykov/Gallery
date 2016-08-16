@@ -74,7 +74,7 @@
 							</td>
 							<td>
 								<div class="media-left media-middle">
-									<a href="#" class="btn bg-{{ random(['pink', 'violet', 'purple' ,'indigo' , 'blue', 'teal', 'green' , 'orange', 'brown', 'grey', 'slate' ]) }}{{random(['-300','-400','','-600','-700','-800'])}} btn-rounded btn-icon btn-xs">
+									<a href="/admin/user/{{row.usernameid.id}}" class="btn bg-{{ random(['pink', 'violet', 'purple' ,'indigo' , 'blue', 'teal', 'green' , 'orange', 'brown', 'grey', 'slate' ]) }}{{random(['-300','-400','','-600','-700','-800'])}} btn-rounded btn-icon btn-xs">
 										{% if row.usernameId.avatar is empty %}
 										<img src="/img/user_icon.jpg">
 										{% else %}
@@ -83,7 +83,7 @@
 									</a>
 								</div>
 								<div class="media-body">
-									<a href="#" class="display-inline-block text-default text-semibold letter-icon-title">{{row.usernameid.username}}</a>
+									<a href="/admin/user/{{row.usernameid.id}}" class="display-inline-block text-default text-semibold letter-icon-title">{{row.usernameid.username}}</a>
 									{% if row.date.date|date("Y-m-d") == date %}
 									<div class="text-muted text-size-small">
 										<span class="label bg-success-400">New</span>
@@ -92,12 +92,10 @@
 								</div>
 							</td>
 							<td>
-								<a href="#" class="text-default display-inline-block">
 									<span class="display-block text-muted">{{row.post}}</span>
-								</a>
 							</td>
 							<td class="text-center">
-								<a href="#"><i class="icon-cross2 text-danger"></i></a>
+								<a href="/admin?delete={{row.id}}"><i class="icon-cross2 text-danger"></i></a>
 							</td>
 						</tr>
 						{% endfor %}
