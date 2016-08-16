@@ -13,36 +13,36 @@ use AppBundle\Entity\user;
 class UserController extends Controller
 {
 
- /**
+    /**
      * @Route("/register", name="user_registration")
      */
- public function registerAction(Request $request)
- {
-    $message = [];
-    $user = new User();
-    $form = $this->createForm(UserType::class, $user);
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
+    public function registerAction(Request $request)
+    {
+        $message = [];
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        $password = $this->get('security.password_encoder')
-        ->encodePassword($user, $user->getPassword());
-        $user->setPassword($password);
+            $password = $this->get('security.password_encoder')
+            ->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
-        return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render(
+            'registration/register.html.twig',
+            array(
+                'message' => $message,
+                'title' => 'Registration',
+                'form' => $form->createView())
+            );
     }
-
-    return $this->render(
-        'registration/register.html.twig',
-        array(
-            'message' => $message,
-            'title' => 'Registration',
-            'form' => $form->createView())
-        );
-}
 
         /**
      * @Route("/login_check", name="login_check")
@@ -59,8 +59,8 @@ class UserController extends Controller
     public function loginAction(Request $request)
     {
 
-       return [];
-   }
+     return [];
+ }
         /**
          * @Template()
      * @Route("/logout", name="logout")

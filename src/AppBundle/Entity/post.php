@@ -12,7 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class post
 {
-        /**
+
+
+    /**
      * @var integer
      * @ORM\ManyToOne(targetEntity="user", inversedBy="post")
      * @ORM\JoinColumn(name="username_id", referencedColumnName="id")
@@ -34,11 +36,10 @@ class post
      */
     private $post;
 
-  
     /**
      * @var integer
-     *
-     * @ORM\Column(name="image_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="photo", inversedBy="post")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $imageId;
 
@@ -90,8 +91,8 @@ class post
      *
      * @return date
      */
-    public function setDate($date)
-    {
+      public function setDate($date)
+      {
         $this->date = $date;
 
         return $this;
@@ -106,25 +107,24 @@ class post
     {
         return $this->date;
     }
-
-    /**
+/**
      * Set imageId
      *
-     * @param integer $imageId
+     * @param \AppBundle\Entity\user $imageId
      *
      * @return post
      */
-    public function setImageId($imageId)
-    {
-        $this->imageId = $imageId;
+public function setimageId(\AppBundle\Entity\photo $imageId = null)
+{
+    $this->imageId = $imageId;
 
-        return $this;
-    }
+    return $this;
+}
 
     /**
      * Get imageId
      *
-     * @return integer
+     * @return \AppBundle\Entity\photo
      */
     public function getImageId()
     {

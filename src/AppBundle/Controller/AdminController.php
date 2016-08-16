@@ -17,11 +17,13 @@ class AdminController extends Controller
     return $user;
   }
 
-    /**
-     *@Route("/admin",name="admin")
+  /*********************************************************************************************************/
+     /**
+     * @Route("/admin",name="admin")
      */
-    public function homeAction(Request $request)
-    {
+     /*********************************************************************************************************/     
+     public function homeAction(Request $request)
+     {
 
       $photos = $this->getDoctrine()
       ->getRepository('AppBundle:photo')
@@ -63,10 +65,11 @@ class AdminController extends Controller
         return $this->redirectToRoute('home');
       endif;
     }
-
+    /*********************************************************************************************************/   
      /**
      *@Route("/admin/profile",name="admin_profile")
      */
+     /*********************************************************************************************************/   
      public function profileAction(Request $request)
      {
       $user = $this->user();
@@ -110,10 +113,11 @@ class AdminController extends Controller
         return $this->redirectToRoute('home');
       endif;
     }
-
+    /*********************************************************************************************************/   
     /**
      *@Route("/admin/users",name="admin_users")
      */
+    /*********************************************************************************************************/   
     public function  usersAction(Request $request)
     {
       $user = $this->user();
@@ -133,9 +137,13 @@ class AdminController extends Controller
       endif;
     }
 
+    /*********************************************************************************************************/   
     /**
      *@Route("/admin/user/{id}",name="admin_user")
-     */
+    */
+
+    /*********************************************************************************************************/   
+
     public function  userAction(Request $request,$id)
     {
       $user = $this->user();
@@ -179,10 +187,14 @@ class AdminController extends Controller
         return $this->redirectToRoute('home');
       endif;
     }
+    /*********************************************************************************************************/   
 
     /**
      *@Route("/admin/photos",name="admin_photos")
      */
+    
+    /*********************************************************************************************************/   
+
     public function  photosAction(Request $request)
     {
       $user = $this->user();
@@ -214,9 +226,13 @@ class AdminController extends Controller
       endif;
     }
 
+    /*********************************************************************************************************/   
     /**
      *@Route("/admin/new_user",name="admin_new_user")
      */
+    
+    /*********************************************************************************************************/   
+
     public function new_userAction(Request $request)
     {
      $message=[];
@@ -305,9 +321,13 @@ class AdminController extends Controller
   
 }
 
+/*********************************************************************************************************/   
     /**
      *@Route("/admin/edit_user/{id}",name="admin_edit_user")
      */
+    
+/*********************************************************************************************************/   
+
     public function edit_userAction(Request $request,$id)
     {
      $message=[];

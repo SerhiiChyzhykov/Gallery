@@ -13,11 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class photo
 {
 
+
     /**
      * @ORM\ManyToOne(targetEntity="categories", inversedBy="photo")
      * @ORM\JoinColumn(name="categories_id", referencedColumnName="id")
      */
-     protected $categories;
+    protected $categories;
      /**
      * @ORM\ManyToOne(targetEntity="user", inversedBy="photo")
      * @ORM\JoinColumn(name="username_id", referencedColumnName="id")
