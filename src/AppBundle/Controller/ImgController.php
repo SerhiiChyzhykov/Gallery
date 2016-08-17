@@ -57,7 +57,7 @@ class ImgController extends Controller
       $photos = $qb->getQuery()->getSingleScalarResult();
       endif;
 
-      return $this->render('design/category_list_img.html.twig', array(
+      return $this->render('site/category_list_img.html.twig', array(
         'title' => 'Categories',
         'photo'=>$ser,
         'id' => $cat ,
@@ -107,7 +107,7 @@ class ImgController extends Controller
         $photos = $qb->getQuery()->getSingleScalarResult();
         endif;
 
-        return $this->render('design/category.html.twig', array(
+        return $this->render('site/category.html.twig', array(
           'title' => 'Categories',
           'photo'=>$ser,
           'url' => 'categories',
@@ -140,7 +140,7 @@ class ImgController extends Controller
         $ser = $query->getResult();
 
 
-        return $this->render('design/category_list.html.twig', array(
+        return $this->render('site/category_list.html.twig', array(
           'title' => 'Categories',
           'photo'=>$ser,
           'url' => 'categories',
@@ -178,7 +178,7 @@ class ImgController extends Controller
         $photos = $qb->getQuery()->getSingleScalarResult();
         endif;
 
-        return $this->render('design/img_gallery.html.twig', array(
+        return $this->render('site/img_gallery.html.twig', array(
           'title' => 'Gallery',
           'photo' => $photo,
           'photos' => $photos,
@@ -256,7 +256,7 @@ class ImgController extends Controller
       $photos = $qb->getQuery()->getSingleScalarResult();
       endif;
 
-      return $this->render('design/img_add.html.twig', array(
+      return $this->render('site/img_add.html.twig', array(
         'title' => 'Add photo',
         'url' => 'add',
         'message' => $message,
@@ -268,12 +268,13 @@ class ImgController extends Controller
     }
 
     /**
-     *@Route("/photo/{id}" , name="photos/$id")
+     *@Route("/photo/{id}" , name="photo")
      */
 
     public function Photo(Request $request,$id)
     {
       $message = [] ;
+
       $users =  $this->get('security.token_storage')->getToken()->getUser();
 
       $send=$request->get('post');
@@ -293,10 +294,10 @@ class ImgController extends Controller
      $repository = $this->getDoctrine()
      ->getRepository('AppBundle:post');
      $query = $repository->createQueryBuilder('p')
-     ->where('p.imageId LIKE :title')
+     ->where('p.imageId = :id')
      ->setMaxResults(5)
      ->orderBy('p.id', 'DESC')
-     ->setParameter('title',$id)
+     ->setParameter('id',$id)
      ->getQuery();
 
      $posts = $query->getResult();
@@ -312,13 +313,14 @@ class ImgController extends Controller
 
      $category = $query->getResult();
 
-     if($delete = $request->get('delete')):
+     if($delete = $request->get('delete')){
       $em = $this->getDoctrine()->getManager();
-    $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
-    $em->remove($delete);
-    $em->flush();
-    return $this->redirectToRoute('home');
-    endif;
+      $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
+      $em->remove($delete);
+      $em->flush();
+      return $this->redirectToRoute('home');
+    }
+
     $user =  $this->get('security.token_storage')->getToken()->getUser();
 
     if($user):
@@ -377,7 +379,7 @@ class ImgController extends Controller
               $em->flush();
               $message['success'] = "Photo added";
 
-              return $this->render('design/img.html.twig', array(
+              return $this->render('site/img.html.twig', array(
                 'users'    =>$users,
                 'post'     => $posts,
                 'photo'    => $photo,
@@ -407,7 +409,7 @@ class ImgController extends Controller
     }
     endif;
 
-    return $this->render('design/img.html.twig', array(
+    return $this->render('site/img.html.twig', array(
       'users'    =>$users,
       'post'     => $posts,
       'photo'    => $photo,

@@ -52,7 +52,7 @@ class HomeController extends Controller
     $photos = $qb->getQuery()->getSingleScalarResult();
     endif;
 
-    return $this->render('design/index.html.twig', array(
+    return $this->render('site/index.html.twig', array(
      'message' =>$message,
      'title' => 'Home',
      'url' => 'home',

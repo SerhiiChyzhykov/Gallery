@@ -1,4 +1,4 @@
-{% extends '/design/admin/header.html.twig' %}
+{% extends '/admin/header.html.twig' %}
 {% block body %}
 <!-- Main content -->
 <div class="content">
@@ -50,7 +50,7 @@
 	</div>
 	<div class="panel panel-flat col-sm-6">
 		<div class="panel-heading">
-			<h6 class="panel-title"><a href="/admin/coments">New Comments</a></h6>
+			<h6 class="panel-title"><a href="/admin/comments">New Comments</a></h6>
 			<a class="heading-elements-toggle">
 				<i class="icon-more"></i>
 			</a>
@@ -93,7 +93,9 @@
 								</div>
 							</td>
 							<td>
-							<span class="display-block text-muted">{{row.imageid.id}}</span>
+								<a href="/photo/{{row.imageid.id}}">
+									<i class="icon-link text-green"></i>
+								</a>
 							</td>
 							<td>
 								<span class="display-block text-muted">{{row.post}}</span>

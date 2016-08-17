@@ -1,4 +1,4 @@
-{% extends '/design/admin/header.html.twig' %}
+{% extends '/admin/header.html.twig' %}
 {% block body %}
 <div class="content">
 	<div class="page-header page-header-default">
@@ -54,7 +54,7 @@
 					{% if row.avatar == NULL %}
 					<img src="/img/user_icon.jpg" >
 					{% else %}
-					<img src="{{row.avatar}}" >
+					<img src="{{row.avatar}}" style="">
 					{% endif %}
 					<div class="caption-overflow">
 						<span>

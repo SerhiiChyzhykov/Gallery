@@ -1,0 +1,60 @@
+{% extends '/admin/header.html.twig' %}
+{% block body %}
+<div class="content">
+	<div class="page-header page-header-default">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Comments</span></h4>
+			</div>
+			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+		</div>
+		<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+				<li>
+					<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
+				</li>
+				<li class="active"><i class="icon-user position-left"></i>Comments</li>
+			</ul>
+			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+		</div>
+	</div>
+	<div class="messages">
+		{% for key , m in message %}
+		<div class="alert alert-{{key}}">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>{{ m }}</strong>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="panel panel-flat col-sm-6">
+		<div class="panel-heading">
+			<h6 class="panel-title"><a href="/admin/comments">New Comments</a></h6>
+			<a class="heading-elements-toggle">
+				<i class="icon-more"></i>
+			</a>
+		</div>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<ul class="media-list chat-list content-group">
+					<li class="media date-step">
+						<span>Today</span>
+					</li>
+
+					{% for row in comments %}
+					<li class="media">
+						<div class="media-left">
+							<a href="http://demo.interface.club/limitless/layout_1/LTR/default/assets/images/demo/images/3.png">
+								<img src="./Limitless - Responsive Web Application Kit by Eugene Kopyov_files/face11.jpg" class="img-circle" alt="">
+							</a>
+						</div>
+						<div class="media-body">
+							<div class="media-content">{{row.post}}</div>
+							<span class="media-annotation display-block mt-10">Wed, 4:20 pm <a href="http://demo.interface.club/limitless/layout_1/LTR/default/timelines_center.html#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
+						</div>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% endblock %}

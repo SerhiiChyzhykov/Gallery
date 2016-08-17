@@ -19,10 +19,24 @@ class UserController extends Controller
     public function registerAction(Request $request)
     {
         $message = [];
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+           $db_username = $this->getDoctrine()->getManager()
+           ->createQuery(
+              'SELECT p
+              FROM AppBundle:user p
+              WHERE p.username = :username'
+              )->setParameter('username', $user->username)->getResult();
+
+           if($db_username){
+
+               $message['danger'] = 'This username is already taken';
+
+           }else{
 
             $password = $this->get('security.password_encoder')
             ->encodePassword($user, $user->getPassword());
@@ -33,16 +47,18 @@ class UserController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('home');
+            
         }
-
-        return $this->render(
-            'registration/register.html.twig',
-            array(
-                'message' => $message,
-                'title' => 'Registration',
-                'form' => $form->createView())
-            );
     }
+
+    return $this->render(
+        'register.html.twig',
+        array(
+            'message' => $message,
+            'title' => 'Registration',
+            'form' => $form->createView())
+        );
+}
 
         /**
      * @Route("/login_check", name="login_check")

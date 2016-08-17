@@ -54,7 +54,7 @@ class AdminController extends Controller
       $user = $this->user();
 
       if($user->role >= 2):
-        return $this->render('design/admin/index.html.twig', array(
+        return $this->render('admin/index.html.twig', array(
          'title'     =>  'Dashboard',
          'comments'  =>  $comments,
          'photos'    =>  $photos ,
@@ -102,7 +102,7 @@ class AdminController extends Controller
 
 
       if($user->role >= 2):
-        return $this->render('design/admin/admin.user.html.twig', array(
+        return $this->render('admin/admin.user.html.twig', array(
          'user'     => $user_profile,
          'photo'    => $photo,
          'photos'   => $photos,
@@ -127,7 +127,7 @@ class AdminController extends Controller
       $users = $query->getResult();
 
       if($user->role >= 2):
-        return $this->render('design/admin/admin.users.html.twig', array(
+        return $this->render('admin/admin.users.html.twig', array(
          'users' => $users,
          'title' => 'Users',
          'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
@@ -176,7 +176,7 @@ class AdminController extends Controller
 
 
       if($user->role >= 2):
-        return $this->render('design/admin/admin.user.html.twig', array(
+        return $this->render('admin/admin.user.html.twig', array(
          'user'     => $user_profile,
          'photo'    => $photo,
          'photos'   => $photos,
@@ -187,6 +187,7 @@ class AdminController extends Controller
         return $this->redirectToRoute('home');
       endif;
     }
+
     /*********************************************************************************************************/   
 
     /**
@@ -215,7 +216,7 @@ class AdminController extends Controller
       endif;
       
       if($user->role >= 2):
-        return $this->render('design/admin/admin.photos.html.twig', array(
+        return $this->render('admin/admin.photos.html.twig', array(
          'photo' => $photo,
          'user' => $user,
          'title' => 'Photos',
@@ -308,7 +309,7 @@ class AdminController extends Controller
   }
 
   if($user->role >= 2){
-    return $this->render('design/admin/admin.new_user.html.twig', array(
+    return $this->render('admin/admin.new_user.html.twig', array(
      'user' => $user,
      'title' => 'New User',
      'message' => $message,
@@ -326,7 +327,7 @@ class AdminController extends Controller
      *@Route("/admin/edit_user/{id}",name="admin_edit_user")
      */
     
-/*********************************************************************************************************/   
+    /*********************************************************************************************************/   
 
     public function edit_userAction(Request $request,$id)
     {
@@ -399,7 +400,7 @@ class AdminController extends Controller
   }
 
   if($user->role >= 2):
-    return $this->render('design/admin/admin.edit_user.html.twig', array(
+    return $this->render('admin/admin.edit_user.html.twig', array(
      'user' => $user,
      'title' => 'Edit User',
      'db_username' => $db_username,
@@ -412,7 +413,51 @@ class AdminController extends Controller
 }
 
 
+/*********************************************************************************************************/   
 
-}
+    /**
+     *@Route("/admin/comments",name="admin_comments")
+     */
+    
+    /*********************************************************************************************************/   
 
+    public function  commentsAction(Request $request)
+    {
+      $message = [];
 
+      $user = $this->user();
+      $repository = $this->getDoctrine()
+      ->getRepository('AppBundle:photo');
+      $query = $repository->createQueryBuilder('p')
+      ->where('p.username = :id')
+      ->setParameter('id',$user)
+      ->getQuery();
+      $photo = $query->getResult();
+
+      $comments = $this->getDoctrine()
+      ->getRepository('AppBundle:post')
+      ->createQueryBuilder('p')
+      ->getQuery()->getResult();
+
+      if($delete = $request->get('delete')):
+        $em = $this->getDoctrine()->getManager();
+      $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
+      $em->remove($delete);
+      $em->flush();
+      return $this->redirectToRoute('admin_photos');
+      endif;
+      
+      if($user->role >= 2):
+        return $this->render('admin/admin.comments.html.twig', array(
+         'photo' => $photo,
+         'user' => $user,
+         'message' => $message,
+         'title' => 'Photos',
+         'comments' => $comments,
+         'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+         ));
+      else:
+        return $this->redirectToRoute('home');
+      endif;
+    }
+  }
