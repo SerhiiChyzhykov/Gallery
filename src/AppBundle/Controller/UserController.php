@@ -18,53 +18,55 @@ class UserController extends Controller
      */
     public function registerAction(Request $request)
     {
-        $message = [];
+      $message = [];
 
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+      $user = new User();
+      $form = $this->createForm(UserType::class, $user);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
 
-           $db_username = $this->getDoctrine()->getManager()
-           ->createQuery(
-              'SELECT p
-              FROM AppBundle:user p
-              WHERE p.username = :username'
-              )->setParameter('username', $user->username)->getResult();
+       $db_username = $this->getDoctrine()->getManager()
+       ->createQuery(
+        'SELECT p
+        FROM AppBundle:user p
+        WHERE p.username = :username'
+        )->setParameter('username', $user->username)->getResult();
 
-           if($db_username){
+       if($db_username){
 
-               $message['danger'] = 'This username is already taken';
+         $message['danger'] = 'This username is already taken';
 
-           }else{
+       }else{
 
-            $password = $this->get('security.password_encoder')
-            ->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+        $password = $this->get('security.password_encoder')
+        ->encodePassword($user, $user->getPassword());
+        $user->setPassword($password);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
 
-            return $this->redirectToRoute('home');
-            
-        }
+        return $this->redirectToRoute('home');
+
+      }
     }
 
     return $this->render(
-        'register.html.twig',
-        array(
-            'message' => $message,
-            'title' => 'Registration',
-            'form' => $form->createView())
-        );
-}
+      'register.html.twig',
+      array(
+        'message' => $message,
+        'title' => 'Registration',
+        'form' => $form->createView())
+      );
+  }
 
         /**
      * @Route("/login_check", name="login_check")
       * @Template()
      */
-        public function checkAction(){}
+        public function checkAction(){
+
+        }
 
 
 
@@ -74,12 +76,11 @@ class UserController extends Controller
      */
     public function loginAction(Request $request)
     {
-
-     return [];
- }
+ 
+    }
         /**
          * @Template()
      * @Route("/logout", name="logout")
      */
         public function logoutAction(){}
-    }
+      }
