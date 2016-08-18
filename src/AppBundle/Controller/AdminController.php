@@ -72,48 +72,125 @@ class AdminController extends Controller
      /*********************************************************************************************************/   
      public function profileAction(Request $request)
      {
-      $user = $this->user();
 
-      $repository = $this->getDoctrine()
-      ->getRepository('AppBundle:user');
+       $message=[];
+       $user = $this->user();
 
-      $query = $repository->createQueryBuilder('p')
-      ->where('p.id = :id')
-      ->setMaxResults(1)
-      ->setParameter('id',$user )
-      ->getQuery();
+       $username   = $request->get('username');
+       $last_name  = $request->get('last_name');
+       $first_name = $request->get('first_name');
+       $twitter = $request->get('twitter');
+       $password = $request->get('password');
+       $git = $request->get('git');
+       $google = $request->get('google');
+       $avatar = $request->get('image');
+       $role = $request->get('role');
 
-      $user_profile = $query->getResult();
+       function is_valid_type($file)
+       {
 
-      $repository = $this->getDoctrine()
-      ->getRepository('AppBundle:photo');
-      $query = $repository->createQueryBuilder('p')
-      ->where('p.username = :id')
-      ->setParameter('id',$user )
-      ->getQuery();
-      $photo = $query->getResult();
+        $valid_types = array("image/jpg","image/jpeg", "image/bmp", "image/gif", "image/png");
 
-      $qb = $repository->createQueryBuilder('a');
-      $qb->select('COUNT(a)');
-      $qb->where('a.username = :usernameId');
-      $qb->setParameter('usernameId', $user );
+        if (in_array($file['type'], $valid_types))
+          return 1;
+        return 0;
+      }
+      $em = $this->getDoctrine()->getManager();
+      $query = $em->createQuery(
+        'SELECT p
+        FROM AppBundle:user p
+        WHERE p.id = :id'
+        )->setParameter('id', $user->id);
 
-      $photos = $qb->getQuery()->getSingleScalarResult();
+      $db_username = $query->getResult();
 
+      if (isset($_FILES['image'])) {
+        if (!empty($_FILES['image'])) {
+          if (is_valid_type($_FILES['image'])){
+            if (!file_exists($_FILES['image']['name'])){
+              $extension = strtolower(substr(strrchr($_FILES['image']['name'], '.'), 1));
+              $filename = DFileHelper::getRandomFileName($extension);
+              $target =  'img/avatar/' . $filename . '.' . $extension;
+              if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
+               if(isset($last_name) && isset($first_name) && isset($twitter) && isset($password) && isset($git) && isset($google)){
+                if(!empty($last_name) ){
+                  if(!empty($first_name)){
+                    if(!empty($twitter)){
+                      if(!empty($password)){
+                        if(!empty($git)){
+                          if(!empty($google)){
+                            
+                            $em = $this->getDoctrine()->getManager();
+                            $user = $em->getRepository('AppBundle:user')->find($user->id);
+                            $user->setUsername($user->username);
+                            $user->setlast_name($last_name);
+                            $user->settwitter($twitter);
+                            $user->setgoogle($google);
+                            $user->setgit($git);
+                            $user->setrole($user->role);
+                            $passwords = $this->get('security.password_encoder')
+                            ->encodePassword($user,$password);
+                            $user->setPassword($passwords);
+                            $user->setfirst_name($first_name);
+                            $user->setavatar('/img/avatar/'.$filename. '.' . $extension);
+                            $em->persist($user);
+                            $em->flush();
 
-      if($user->role >= 2):
-        return $this->render('admin/admin.user.html.twig', array(
-         'user'     => $user_profile,
-         'photo'    => $photo,
-         'photos'   => $photos,
-         'title' => $user,
-         'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-         ));
-      else:
-        return $this->redirectToRoute('home');
-      endif;
+                            $message['success'] = "User updated";
+                          }else{$message['danger'] = "google missing";}
+                        }else{$message['danger'] = "git missing";}
+                      }else{$message['danger'] = "password missing";}
+                    }else{$message['danger'] = "twitter missing";}
+                  }else{$message['danger'] = "first_name missing";}
+                }else{$message['danger'] = "last_name missing";}
+              }else{$message['danger'] = "Somsing missing";}
+            }else{$message['danger'] = "You can not download the file. Check permissions to the directory ( read / write)";}
+          }else{$message['danger'] = "File with this name already exists";}
+        }else{$message['danger'] = "You can upload files : JPEG, GIF, BMP, PNG";}
+      }
     }
-    /*********************************************************************************************************/   
+
+    $repository = $this->getDoctrine()
+    ->getRepository('AppBundle:user');
+
+    $query = $repository->createQueryBuilder('p')
+    ->where('p.id = :id')
+    ->setMaxResults(1)
+    ->setParameter('id',$user )
+    ->getQuery();
+
+    $user_profile = $query->getResult();
+
+    $repository = $this->getDoctrine()
+    ->getRepository('AppBundle:photo');
+    $query = $repository->createQueryBuilder('p')
+    ->where('p.username = :id')
+    ->setParameter('id',$user )
+    ->getQuery();
+    $photo = $query->getResult();
+
+    $qb = $repository->createQueryBuilder('a');
+    $qb->select('COUNT(a)');
+    $qb->where('a.username = :usernameId');
+    $qb->setParameter('usernameId', $user );
+
+    $photos = $qb->getQuery()->getSingleScalarResult();
+
+
+    if($user->role >= 2):
+      return $this->render('admin/admin.profile.html.twig', array(
+       'user'     => $user_profile,
+       'photo'    => $photo,
+       'photos'   => $photos,
+       'title' => $user,
+       'message'  =>  $message,
+       'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+       ));
+    else:
+      return $this->redirectToRoute('home');
+    endif;
+  }
+  /*********************************************************************************************************/   
     /**
      *@Route("/admin/users",name="admin_users")
      */

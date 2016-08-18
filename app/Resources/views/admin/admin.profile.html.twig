@@ -82,8 +82,17 @@
 		<!-- /toolbar -->
 	</div>
 	<!-- /page header -->
+
 	<!-- Content area -->
 	<div class="content">
+			<div class="messages">
+		{% for key , m in message %}
+		<div class="alert alert-{{key}}">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>{{ m }}</strong>
+		</div>
+		{% endfor %}
+	</div>
 		<!-- User profile -->
 		<div class="row">
 			<div class="col-lg-9">
@@ -173,19 +182,26 @@
 								<div class="panel panel-flat">
 									<div class="panel-heading">
 										<h6 class="panel-title">Profile information</h6>
-
+										<div class="heading-elements">
+											<ul class="icons-list">
+												<li><a data-action="collapse"></a></li>
+												<li><a data-action="reload"></a></li>
+												<li><a data-action="close"></a></li>
+											</ul>
+										</div>
 										<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
 										<div class="panel-body">
 											{% for row in user %}
+											<form enctype="multipart/form-data" method="POST">
 												<div class="form-group">
 													<div class="row">
 														<div class="col-md-6">
 															<label for="username">Username</label>
-															<input disabled="disabled" type="text"  class="form-control" value="{{row.username}}" required="required" name="username" id="username">
+															<input type="text"  class="form-control" value="{{row.username}}" required="required" name="username" id="username" disabled="disabled">
 														</div>
 														<div class="col-md-6">
 															<label for="password">Password</label>
-															<input disabled="disabled" type="password" class="form-control"  required="required" name="password" id="password">
+															<input type="password" class="form-control"  required="required" name="password" id="password">
 														</div>
 													</div>
 												</div>
@@ -193,11 +209,11 @@
 													<div class="row">
 														<div class="col-md-6">
 															<label for="first_name">First name</label>
-															<input disabled="disabled" type="text" class="form-control" value="{{row.first_name}}" required="required" name="first_name" id="first_name">
+															<input type="text" class="form-control" value="{{row.first_name}}" required="required" name="first_name" id="first_name">
 														</div>
 														<div class="col-md-6">
 															<label for="last_name">Last name</label>
-															<input disabled="disabled" type="text" class="form-control" value="{{row.last_name}}" required="required" name="last_name" id="last_name">
+															<input type="text" class="form-control" value="{{row.last_name}}" required="required" name="last_name" id="last_name">
 														</div>
 													</div>
 												</div>
@@ -205,34 +221,35 @@
 													<div class="row">
 														<div class="col-md-4">
 															<label for="twitter">Twitter</label>
-															<input disabled="disabled" type="text"  class="form-control" value="{{row.twitter}}" required="required" name="twitter" id="twitter">
+															<input type="text"  class="form-control" value="{{row.twitter}}" required="required" name="twitter" id="twitter">
 														</div>
 														<div class="col-md-4">
 															<label for="git">Github</label>
-															<input disabled="disabled" type="text" class="form-control" value="{{row.git}}" required="required" name="git" id="git">
+															<input type="text" class="form-control" value="{{row.git}}" required="required" name="git" id="git">
 														</div>
 														<div class="col-md-4">
 															<label for="google">Google Drive</label>
-															<input disabled="disabled" type="text"  class="form-control" value="{{row.google}}" required="required" name="google" id="google">
+															<input type="text"  class="form-control" value="{{row.google}}" required="required" name="google" id="google">
 														</div>
 													</div>
 												</div>
 												<div class="form-group">
 													<div class="row">
 														<div class="col-md-6">
-															<label>Email</label>
-															<input disabled="disabled" type="text" readonly="readonly"  class="form-control">
-														</div>
-														<div class="col-md-6">
-															<label for="role">Role</label>
-															<select disabled="disabled" class="form-control" required="required" name="role" id="role">
-																<option value="1" {% if row.role == 1 %} selected="selected" {% endif %}>User</option>
-																<option value="2" {% if row.role == 2 %} selected="selected" {% endif %}>Moderator</option> 
-																<option value="3" {% if row.role == 3 %} selected="selected" {% endif %}>Admin</option> 
-															</select>
+															<label for="image" class="display-block">Upload profile image</label>
+															<div class="uploader">
+																<input type="file" class="file-styled" name="image" id="image">
+																<span class="filename" style="-webkit-user-select: none;">No file selected</span>
+																<span class="action btn bg-warning" style="-webkit-user-select: none;">Choose File</span>
+															</div>
+															<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
 														</div>
 													</div>
 												</div>
+												<div class="text-right">
+													<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+												</div>
+											</form>
 											{% endfor %}
 										</div>
 									</div>
