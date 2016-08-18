@@ -23,7 +23,7 @@
 		<div class="content">
 			<!-- Image grid -->
 			<div class="row">
-				{% for row in photo %}
+				{% for row in pagination %}
 				<div class="col-lg-3 col-sm-6" >
 					<div class="thumbnail">
 						<div class="thumb" style="min-height: 250px;">
@@ -45,6 +45,8 @@
 					</div>
 				</div>
 				{% endfor %}
+
 			</div>
+				<center>{{ knp_pagination_render(pagination) }}</center>
 			<!-- /video grid -->
 	{% endblock %}

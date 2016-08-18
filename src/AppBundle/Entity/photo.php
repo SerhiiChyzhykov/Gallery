@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class photo
 {
-
-
     /**
      * @ORM\ManyToOne(targetEntity="categories", inversedBy="photo")
      * @ORM\JoinColumn(name="categories_id", referencedColumnName="id")
@@ -53,10 +51,8 @@ class photo
      * @ORM\Column(name="image", type="string", length=255)
      */
     private $image;
-    
-
-
-    /**
+  
+     /**
      * Get id
      *
      * @return integer

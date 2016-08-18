@@ -288,6 +288,10 @@ class AdminController extends Controller
       ->getQuery();
       $photo = $query->getResult();
 
+    $paginator  = $this->get('knp_paginator');
+    $pagination = $paginator->paginate(
+      $photo,$request->query->getInt('page', 1),8);
+
       if($delete = $request->get('delete')):
         $em = $this->getDoctrine()->getManager();
       $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
@@ -298,7 +302,7 @@ class AdminController extends Controller
       
       if($user->role >= 2):
         return $this->render('admin/admin.photos.html.twig', array(
-         'photo' => $photo,
+         'pagination' => $pagination,
          'user' => $user,
          'title' => 'Photos',
          'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
