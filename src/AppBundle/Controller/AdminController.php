@@ -119,7 +119,7 @@ class AdminController extends Controller
                       if(!empty($password)){
                         if(!empty($git)){
                           if(!empty($google)){
-                            
+
                             $em = $this->getDoctrine()->getManager();
                             $user = $em->getRepository('AppBundle:user')->find($user->id);
                             $user->setUsername($user->username);
@@ -176,14 +176,18 @@ class AdminController extends Controller
 
     $photos = $qb->getQuery()->getSingleScalarResult();
 
+    $paginator  = $this->get('knp_paginator');
+    $pagination = $paginator->paginate(
+      $photo,$request->query->getInt('page', 1),8);
 
     if($user->role >= 2):
       return $this->render('admin/admin.profile.html.twig', array(
        'user'     => $user_profile,
        'photo'    => $photo,
        'photos'   => $photos,
-       'title' => $user,
+       'title'    => $user,
        'message'  =>  $message,
+       'pagination' => $pagination,
        'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
        ));
     else:

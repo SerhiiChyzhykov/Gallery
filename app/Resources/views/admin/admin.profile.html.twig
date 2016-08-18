@@ -82,17 +82,14 @@
 		<!-- /toolbar -->
 	</div>
 	<!-- /page header -->
-
 	<!-- Content area -->
 	<div class="content">
-			<div class="messages">
-		{% for key , m in message %}
-		<div class="alert alert-{{key}}">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<strong>{{ m }}</strong>
-		</div>
-		{% endfor %}
-	</div>
+			{% for key , m in message %}
+			<div class="alert bg-{{key}} alert-styled-left">
+				<button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+				<span class="text-semibold">{{ m }}</span>
+			</div>
+			{% endfor %}
 		<!-- User profile -->
 		<div class="row">
 			<div class="col-lg-9">
@@ -139,18 +136,11 @@
 								<div class="panel panel-flat">
 									<div class="panel-heading">
 										<h6 class="panel-title">My schedule</h6>
-										<div class="heading-elements">
-											<ul class="icons-list">
-												<li><a data-action="collapse"></a></li>
-												<li><a data-action="reload"></a></li>
-												<li><a data-action="close"></a></li>
-											</ul>
-										</div>
 										<a class="heading-elements-toggle"><i class="icon-more"></i></a>
 									</div>
 									<div class="panel-body">
 										<div class="row">
-											{% for row in photo %}
+											{% for row in pagination %}
 											<div class="col-lg-3 col-sm-6" >
 												<div class="thumbnail">
 													<div class="thumb" style="min-height: 250px;">
@@ -173,6 +163,7 @@
 											</div>
 											{% endfor %}
 										</div>
+										<center>{{ knp_pagination_render(pagination) }}</center>
 									</div>
 								</div>
 								<!-- /calendar -->
@@ -182,130 +173,123 @@
 								<div class="panel panel-flat">
 									<div class="panel-heading">
 										<h6 class="panel-title">Profile information</h6>
-										<div class="heading-elements">
-											<ul class="icons-list">
-												<li><a data-action="collapse"></a></li>
-												<li><a data-action="reload"></a></li>
-												<li><a data-action="close"></a></li>
-											</ul>
-										</div>
-										<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
-										<div class="panel-body">
-											{% for row in user %}
-											<form enctype="multipart/form-data" method="POST">
-												<div class="form-group">
-													<div class="row">
-														<div class="col-md-6">
-															<label for="username">Username</label>
-															<input type="text"  class="form-control" value="{{row.username}}" required="required" name="username" id="username" disabled="disabled">
-														</div>
-														<div class="col-md-6">
-															<label for="password">Password</label>
-															<input type="password" class="form-control"  required="required" name="password" id="password">
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="row">
-														<div class="col-md-6">
-															<label for="first_name">First name</label>
-															<input type="text" class="form-control" value="{{row.first_name}}" required="required" name="first_name" id="first_name">
-														</div>
-														<div class="col-md-6">
-															<label for="last_name">Last name</label>
-															<input type="text" class="form-control" value="{{row.last_name}}" required="required" name="last_name" id="last_name">
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="row">
-														<div class="col-md-4">
-															<label for="twitter">Twitter</label>
-															<input type="text"  class="form-control" value="{{row.twitter}}" required="required" name="twitter" id="twitter">
-														</div>
-														<div class="col-md-4">
-															<label for="git">Github</label>
-															<input type="text" class="form-control" value="{{row.git}}" required="required" name="git" id="git">
-														</div>
-														<div class="col-md-4">
-															<label for="google">Google Drive</label>
-															<input type="text"  class="form-control" value="{{row.google}}" required="required" name="google" id="google">
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="row">
-														<div class="col-md-6">
-															<label for="image" class="display-block">Upload profile image</label>
-															<div class="uploader">
-																<input type="file" class="file-styled" name="image" id="image">
-																<span class="filename" style="-webkit-user-select: none;">No file selected</span>
-																<span class="action btn bg-warning" style="-webkit-user-select: none;">Choose File</span>
-															</div>
-															<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
-														</div>
-													</div>
-												</div>
-												<div class="text-right">
-													<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
-												</div>
-											</form>
-											{% endfor %}
-										</div>
 									</div>
-									<!-- /profile info -->
-									<!-- /profile info -->
+									<div class="panel-body">
+										{% for row in user %}
+										<form enctype="multipart/form-data" method="POST">
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-6">
+														<label for="username">Username</label>
+														<input type="text"  class="form-control" value="{{row.username}}" required="required" name="username" id="username" disabled="disabled">
+													</div>
+													<div class="col-md-6">
+														<label for="password">Password</label>
+														<input type="password" class="form-control"  required="required" name="password" id="password">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-6">
+														<label for="first_name">First name</label>
+														<input type="text" class="form-control" value="{{row.first_name}}" required="required" name="first_name" id="first_name">
+													</div>
+													<div class="col-md-6">
+														<label for="last_name">Last name</label>
+														<input type="text" class="form-control" value="{{row.last_name}}" required="required" name="last_name" id="last_name">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-4">
+														<label for="twitter">Twitter</label>
+														<input type="text"  class="form-control" value="{{row.twitter}}" required="required" name="twitter" id="twitter">
+													</div>
+													<div class="col-md-4">
+														<label for="git">Github</label>
+														<input type="text" class="form-control" value="{{row.git}}" required="required" name="git" id="git">
+													</div>
+													<div class="col-md-4">
+														<label for="google">Google Drive</label>
+														<input type="text"  class="form-control" value="{{row.google}}" required="required" name="google" id="google">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-6">
+														<label for="image" class="display-block">Upload profile image</label>
+														<div class="uploader">
+															<input type="file" class="file-styled" name="image" id="image">
+															<span class="filename" style="-webkit-user-select: none;">No file selected</span>
+															<span class="action btn bg-warning" style="-webkit-user-select: none;">Choose File</span>
+														</div>
+														<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+													</div>
+												</div>
+											</div>
+											<div class="text-right">
+												<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+											</div>
+										</form>
+										{% endfor %}
+									</div>
 								</div>
+								<!-- /profile info -->
+								<!-- /profile info -->
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-3">
-						<!-- User thumbnail -->
-						{% for user in user %}
-						<div class="thumbnail">
-							<div class="thumb thumb-rounded thumb-slide">
-								{% if user.avatar != NULL %}
-								<img src="{{user.avatar}}">
-								{% else %}
-								<img src="/img/user_icon.jpg">
-								{% endif %}
-								<div class="caption">
-									<span>
-										<a href="#" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
-										<a href="user_pages_profile.html" class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
-									</span>
-								</div>
-							</div>
-							<div class="caption text-center">
-								<h6 class="text-semibold no-margin">{{user.username}}
-									{% if user.first_name != NULL or user.last_name != NULL %}
-									<small class="display-block">{{user.first_name}} {{user.last_name}}</small>
-									{% endif %}
-								</h6>
-								{% if user.git != NULL or user.last_name != NULL or user.first_name != NULL %}
-								<ul class="icons-list mt-15">
-									{% if user.google != NULL  %}
-									<li>
-										<a href="{{user.google}}" data-popup="tooltip" title="" data-original-title="Google Drive"><i class="icon-google-drive"></i></a>
-									</li>
-									{% endif %}
-									{% if user.twitter != NULL  %}
-									<li>
-										<a href="{{user.twitter}}" data-popup="tooltip" title="" data-original-title="Twitter"><i class="icon-twitter"></i></a>
-									</li>
-									{% endif %}
-									{% if user.git != NULL  %}
-									<li>
-										<a href="{{user.git}}" data-popup="tooltip" title="" data-original-title="Github"><i class="icon-github"></i></a>
-									</li>
-									{% endif %}
-								</ul>
-								{% endif %}
-							</div>
-						</div>
-						{% endfor %}
-						<!-- /user thumbnail -->
 					</div>
 				</div>
-				<!-- /user profile -->
-				{% endblock %}
+				<div class="col-lg-3">
+					<!-- User thumbnail -->
+					{% for user in user %}
+					<div class="thumbnail">
+						<div class="thumb thumb-rounded thumb-slide">
+							{% if user.avatar != NULL %}
+							<img src="{{user.avatar}}">
+							{% else %}
+							<img src="/img/user_icon.jpg">
+							{% endif %}
+							<div class="caption">
+								<span>
+									<a href="#" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
+									<a href="user_pages_profile.html" class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
+								</span>
+							</div>
+						</div>
+						<div class="caption text-center">
+							<h6 class="text-semibold no-margin">{{user.username}}
+								{% if user.first_name != NULL or user.last_name != NULL %}
+								<small class="display-block">{{user.first_name}} {{user.last_name}}</small>
+								{% endif %}
+							</h6>
+							{% if user.git != NULL or user.last_name != NULL or user.first_name != NULL %}
+							<ul class="icons-list mt-15">
+								{% if user.google != NULL  %}
+								<li>
+									<a href="{{user.google}}" data-popup="tooltip" title="" data-original-title="Google Drive"><i class="icon-google-drive"></i></a>
+								</li>
+								{% endif %}
+								{% if user.twitter != NULL  %}
+								<li>
+									<a href="{{user.twitter}}" data-popup="tooltip" title="" data-original-title="Twitter"><i class="icon-twitter"></i></a>
+								</li>
+								{% endif %}
+								{% if user.git != NULL  %}
+								<li>
+									<a href="{{user.git}}" data-popup="tooltip" title="" data-original-title="Github"><i class="icon-github"></i></a>
+								</li>
+								{% endif %}
+							</ul>
+							{% endif %}
+						</div>
+					</div>
+					{% endfor %}
+					<!-- /user thumbnail -->
+				</div>
+			</div>
+			<!-- /user profile -->
+			{% endblock %}
