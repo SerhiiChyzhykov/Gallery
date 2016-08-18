@@ -31,14 +31,14 @@ $(function() {
 
 
     // Calculate min height
-   /* function containerHeight() {
+  /* function containerHeight() {
         var availableHeight = $(window).height() - $('.page-container').offset().top - $('.navbar-fixed-bottom').outerHeight();
 
         $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
     }
 */
     // Initialize
-    containerHeight();
+   /* containerHeight();*/
 
 
 
@@ -382,7 +382,7 @@ $(function() {
 
     // Adjust page height on sidebar control button click
     $(document).on('click', '.sidebar-control', function (e) {
-        containerHeight();
+       /* containerHeight();*/
     });
 
 
@@ -558,7 +558,7 @@ $(function() {
 
     $(window).on('resize', function() {
         setTimeout(function() {
-            containerHeight();
+            /*containerHeight();*/
             
             if($(window).width() <= 768) {
 
