@@ -553,13 +553,14 @@ class AdminController extends Controller
       ->createQueryBuilder('p')
       ->getQuery()->getResult();
 
-      if($delete = $request->get('delete')):
+      if($delete = $request->get('delete')){
+
         $em = $this->getDoctrine()->getManager();
-      $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
-      $em->remove($delete);
-      $em->flush();
-      return $this->redirectToRoute('admin_photos');
-      endif;
+        $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
+        $em->remove($delete);
+        $em->flush();
+        return $this->redirectToRoute('admin_photos');
+      }
       
       if($user->role >= 2):
         return $this->render('admin/admin.comments.html.twig', array(
@@ -608,6 +609,7 @@ class AdminController extends Controller
         $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
         $em->remove($delete);
         $em->flush();
+
         return $this->redirect('/admin/category/'.$id);
       }
 
@@ -668,17 +670,37 @@ class AdminController extends Controller
      ->getQuery()
      ->getResult();
 
-     $user = $this->user();
+     if($delete = $request->get('delete')){
 
-     if($user->role >= 2):
+      $this->getDoctrine()
+      ->getManager()
+      ->getRepository('AppBundle:categories')
+      ->findOneById($delete)
+      ->remove($delete)
+      ->flush();
+
+      $this->getDoctrine()
+      ->getManager()
+      ->getRepository('AppBundle:photo')
+      ->createQueryBuilder("p")
+      ->delete()
+      ->where('p.сategories  = :id')->setParameter("id", $delete)
+      ->getQuery()
+      ->execute();
+
+      return $this->redirect('/admin/categories');
+    }
+
+    $user = $this->user();
+
+    if($user->role >= 2):
       return $this->render('admin/admin.categories.list.html.twig', array(
         'photo'    => $photo,
-        'base_dir'      => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+        'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
     else:
       return $this->redirectToRoute('home');
     endif;
   }
-
 
 }
