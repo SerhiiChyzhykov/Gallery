@@ -17,6 +17,34 @@ class AdminController extends Controller
     return $user;
   }
 
+  public function indexAction(Request $request)
+  {
+
+    $title =  $request->get('title');
+    $articles = 'TEST';
+
+    $categories = $this->getDoctrine()
+    ->getRepository('AppBundle:categories')
+    ->createQueryBuilder('p')
+    ->getQuery()
+    ->getResult();
+
+    $categories_count = $this->getDoctrine()
+    ->getRepository('AppBundle:photo')
+    ->createQueryBuilder('a')
+    ->select('COUNT(a)')
+    ->groupBy('a.categories')
+    ->getQuery()
+    ->getResult();
+
+
+    return $this->render('admin/menu.html.twig', array(
+      'title'             => $title,
+      'categories'        => $categories,
+      'categories_count'  => $categories_count,
+      ));
+  }
+
   /*********************************************************************************************************/
      /**
      * @Route("/admin",name="admin")
@@ -280,6 +308,7 @@ class AdminController extends Controller
     public function  photosAction(Request $request)
     {
       $user = $this->user();
+
       $repository = $this->getDoctrine()
       ->getRepository('AppBundle:photo');
       $query = $repository->createQueryBuilder('p')
@@ -288,9 +317,9 @@ class AdminController extends Controller
       ->getQuery();
       $photo = $query->getResult();
 
-    $paginator  = $this->get('knp_paginator');
-    $pagination = $paginator->paginate(
-      $photo,$request->query->getInt('page', 1),8);
+      $paginator  = $this->get('knp_paginator');
+      $pagination = $paginator->paginate(
+        $photo,$request->query->getInt('page', 1),8);
 
       if($delete = $request->get('delete')):
         $em = $this->getDoctrine()->getManager();
@@ -545,4 +574,111 @@ class AdminController extends Controller
         return $this->redirectToRoute('home');
       endif;
     }
+
+    /*********************************************************************************************************/
+     /**
+     * @Route("/admin/category/{id}",name="category/{id}")
+     */
+     /*********************************************************************************************************/     
+     public function categoryAction(Request $request,$id)
+     {
+
+      $photo = $this->getDoctrine()
+      ->getRepository('AppBundle:photo')
+      ->createQueryBuilder('p')
+      ->where('p.categories = :id')
+      ->setParameter('id',$id)
+      ->getQuery()
+      ->getResult();
+
+      $category = $this->getDoctrine()
+      ->getRepository('AppBundle:categories')
+      ->createQueryBuilder('p')
+      ->where('p.id = :id')
+      ->setParameter('id',$id)
+      ->getQuery()
+      ->getResult();
+
+      $paginator  = $this->get('knp_paginator');
+      $pagination = $paginator->paginate(
+        $photo,$request->query->getInt('page', 1),8);
+
+      if($delete = $request->get('delete')){
+        $em = $this->getDoctrine()->getManager();
+        $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
+        $em->remove($delete);
+        $em->flush();
+        return $this->redirect('/admin/category/'.$id);
+      }
+
+      $user = $this->user();
+
+      if($user->role >= 2):
+        return $this->render('admin/admin.category.html.twig', array(
+          'pagination'    => $pagination,
+          'category'     => $category,
+          'base_dir'      =>  realpath($this->container->getParameter('kernel.root_dir').'/..'),
+          ));
+      else:
+        return $this->redirectToRoute('home');
+      endif;
+    }
+
+
+    /*********************************************************************************************************/
+     /**
+     * @Route("/admin/categories",name="categories")
+     */
+     /*********************************************************************************************************/    
+
+
+     public function categoriesAction(Request $request)
+     {
+
+      $user = $this->user();
+
+      if($user->role >= 2):
+        return $this->render('admin/admin.categories.html.twig', array(
+          'base_dir'      => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+          ));
+      else:
+        return $this->redirectToRoute('home');
+      endif;
+    }
+
+    public function categorieslistAction(Request $request)
+    {
+
+     $count = $this->getDoctrine()->getManager()
+     ->getRepository('AppBundle:categories')
+     ->createQueryBuilder('a')
+     ->select('COUNT(a)')
+     ->getQuery()
+     ->getSingleScalarResult();
+
+     $id = rand(1,$count);
+
+     $photo = $this->getDoctrine()
+     ->getRepository('AppBundle:photo')
+     ->createQueryBuilder('p')
+     ->orderBy('p.categories')
+     ->where('p.categories = :id')
+     ->setMaxResults(1)
+     ->setParameter('id',$id )
+     ->getQuery()
+     ->getResult();
+
+     $user = $this->user();
+
+     if($user->role >= 2):
+      return $this->render('admin/admin.categories.list.html.twig', array(
+        'photo'    => $photo,
+        'base_dir'      => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+        ));
+    else:
+      return $this->redirectToRoute('home');
+    endif;
   }
+
+
+}

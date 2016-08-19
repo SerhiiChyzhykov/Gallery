@@ -1,0 +1,25 @@
+{% extends '/admin/header.html.twig' %}
+{% block body %}
+<div class="content">
+	<div class="page-header page-header-default">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Categories</span></h4>
+			</div>
+			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+		</div>
+		<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+				<li><a href="/admin"><i class="icon-home2 position-left"></i>Home</a></li>
+				<li class="active"><i class="icon-images3 position-left"></i>Categories</li>
+			</ul>
+			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+		</div>
+	</div>
+	<!-- /header content -->
+	<!-- Content area -->
+	{% for i in [1,2,3,4] %}
+	{{ render(controller('AppBundle:Admin:Categorieslist'))}}
+	{% endfor %}
+	<!-- /video grid -->
+	{% endblock %}

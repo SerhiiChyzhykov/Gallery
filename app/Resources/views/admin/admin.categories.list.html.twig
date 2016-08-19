@@ -1,0 +1,25 @@
+<div class="panel bg-{{ random(['primary', 'slate', 'grey', 'brown', 'orange', 'green', 'teal', 'blue', 'indigo', 'purple', 'violet', 'pink']) }} panel-bordered col-lg-3 col-sm-2" style="margin: 0px 5px 5px 0px;">
+	<div class="panel-heading">
+		{% for row in photo|slice(0, 1) %}
+		<h6 class="panel-title"><a href="/admin/category/{{row.categories.id}}" class="color">{{row.categories.title}}</a></h6>
+		{% endfor %}
+		<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+		<div class="panel-body">
+			<div class="row">
+				{% for row in photo %}
+					<div class="thumbnail">
+						<div class="thumb" >
+							<img src="/{{row.image}}" >
+							<div class="caption-overflow" >
+								<span>
+									<a href="/{{row.image}}" data-popup="lightbox" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-plus3"></i></a>
+									<a href="#" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-link2"></i></a>
+								</span>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+

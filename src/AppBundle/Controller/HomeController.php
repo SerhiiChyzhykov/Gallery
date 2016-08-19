@@ -58,7 +58,7 @@ class HomeController extends Controller
      'url' => 'home',
      'photos' => $photos ,
      'pagination' => $pagination,
-      'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+     'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
      ));
   }
 }

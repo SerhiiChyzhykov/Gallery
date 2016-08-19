@@ -1,0 +1,89 @@
+<!-- Main navigation -->
+<div class="sidebar-category sidebar-category-visible">
+	<div class="category-content no-padding">
+		<ul class="navigation navigation-main navigation-accordion">
+			<!-- Main -->
+			<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="" data-original-title="Main pages"></i></li>
+			<li><a href="/admin"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+			<li><a href="/admin/users"><i class="icon-user"></i> <span>Users</span></a></li>
+			<li><a href="/admin/photos"><i class="icon-images3 position-left"></i> <span>Photos</span></a></li>
+			<li>
+				<a href="#" class="has-ul"><i class="icon-copy"></i> <span>Categories</span></a>
+				<ul class="hidden-ul">
+					<li><a href="/admin/categories" id="layout2">All</a></li>
+					{% for row in categories %}
+					<li>
+						<a href="/admin/category/{{row.id}}" id="layout2">
+							{{row.title}}
+							<span class="label bg-warning-400">
+								{% for key,rows in categories_count %}
+								{% if row.id == key + 1 %}
+								{{rows.1}}
+								{% endif %}
+								{% endfor %}
+							</span>
+						</a>
+					</li>
+				</li>
+				{% endfor %}
+			</ul>
+		</li>
+		<li class="disabled">
+			<a href="#" class="has-ul">
+				<i class="icon-stack2"></i> 
+				<span>Page layouts</span>
+				<span class="label label-transparent">Coming soon</span>
+			</a>
+			<ul class="hidden-ul">
+				<li><a href="layout_navbar_fixed.html">Fixed navbar</a></li>
+				<li><a href="layout_navbar_sidebar_fixed.html">Fixed navbar &amp; sidebar</a></li>
+				<li><a href="layout_sidebar_fixed_native.html">Fixed sidebar native scroll</a></li>
+				<li><a href="layout_navbar_hideable.html">Hideable navbar</a></li>
+				<li><a href="layout_navbar_hideable_sidebar.html">Hideable &amp; fixed sidebar</a></li>
+				<li><a href="layout_footer_fixed.html">Fixed footer</a></li>
+				<li class="navigation-divider"></li>
+				<li><a href="boxed_default.html">Boxed with default sidebar</a></li>
+				<li><a href="boxed_mini.html">Boxed with mini sidebar</a></li>
+				<li><a href="boxed_full.html">Boxed full width</a></li>
+			</ul>
+		</li>
+		<li  class="disabled">
+			<a href="#" class="has-ul">
+				<i class="icon-stack"></i> 
+				<span>Starter kit</span>
+				<span class="label label-transparent">Coming soon</span>
+			</a>
+			<ul class="hidden-ul">
+				<li><a href="starters/horizontal_nav.html">Horizontal navigation</a></li>
+				<li><a href="starters/1_col.html">1 column</a></li>
+				<li><a href="starters/2_col.html">2 columns</a></li>
+				<li>
+					<a href="#" class="has-ul">3 columns</a>
+					<ul class="hidden-ul">
+						<li><a href="starters/3_col_dual.html">Dual sidebars</a></li>
+						<li><a href="starters/3_col_double.html">Double sidebars</a></li>
+					</ul>
+				</li>
+				<li><a href="starters/4_col.html">4 columns</a></li>
+				<li>
+					<a href="#" class="has-ul">Detached layout</a>
+					<ul class="hidden-ul">
+						<li><a href="starters/detached_left.html">Left sidebar</a></li>
+						<li><a href="starters/detached_right.html">Right sidebar</a></li>
+						<li><a href="starters/detached_sticky.html">Sticky sidebar</a></li>
+					</ul>
+				</li>
+				<li><a href="starters/layout_boxed.html">Boxed layout</a></li>
+				<li class="navigation-divider"></li>
+				<li><a href="starters/layout_navbar_fixed_main.html">Fixed main navbar</a></li>
+				<li><a href="starters/layout_navbar_fixed_secondary.html">Fixed secondary navbar</a></li>
+				<li><a href="starters/layout_navbar_fixed_both.html">Both navbars fixed</a></li>
+				<li><a href="starters/layout_fixed.html">Fixed layout</a></li>
+			</ul>
+		</li>
+		<li><a href="/logout"><i class="icon-exit"></i> <span>Logout</span></a></li>
+		<!-- /main -->
+	</ul>
+</div>
+</div>
+<!-- /main navigation -->
