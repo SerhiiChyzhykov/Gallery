@@ -650,57 +650,60 @@ class AdminController extends Controller
 
     public function categorieslistAction(Request $request)
     {
+      $message = [];
 
-     $count = $this->getDoctrine()->getManager()
-     ->getRepository('AppBundle:categories')
-     ->createQueryBuilder('a')
-     ->select('COUNT(a)')
-     ->getQuery()
-     ->getSingleScalarResult();
-
-     $id = rand(1,$count);
-
-     $photo = $this->getDoctrine()
-     ->getRepository('AppBundle:photo')
-     ->createQueryBuilder('p')
-     ->orderBy('p.categories')
-     ->where('p.categories = :id')
-     ->setMaxResults(1)
-     ->setParameter('id',$id )
-     ->getQuery()
-     ->getResult();
-
-     if($delete = $request->get('delete')){
-
-      $this->getDoctrine()
-      ->getManager()
+      $count = $this->getDoctrine()->getManager()
       ->getRepository('AppBundle:categories')
-      ->findOneById($delete)
-      ->remove($delete)
-      ->flush();
-
-      $this->getDoctrine()
-      ->getManager()
-      ->getRepository('AppBundle:photo')
-      ->createQueryBuilder("p")
-      ->delete()
-      ->where('p.сategories  = :id')->setParameter("id", $delete)
+      ->createQueryBuilder('a')
+      ->select('COUNT(a)')
       ->getQuery()
-      ->execute();
+      ->getSingleScalarResult();
 
-      return $this->redirect('/admin/categories');
+      $id = rand(1,$count);
+
+      $photo = $this->getDoctrine()
+      ->getRepository('AppBundle:photo')
+      ->createQueryBuilder('p')
+      ->orderBy('p.categories')
+      ->where('p.categories = :id')
+      ->setMaxResults(1)
+      ->setParameter('id',$id )
+      ->getQuery()
+      ->getResult();
+
+      $user = $this->user();
+
+      if($user->role >= 2):
+        return $this->render('admin/admin.categories.list.html.twig', array(
+          'photo'    => $photo,
+          'message'  => $message,
+          'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+          ));
+      else:
+        return $this->redirectToRoute('home');
+      endif;
     }
 
-    $user = $this->user();
 
-    if($user->role >= 2):
-      return $this->render('admin/admin.categories.list.html.twig', array(
-        'photo'    => $photo,
-        'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ));
-    else:
-      return $this->redirectToRoute('home');
-    endif;
+    /*********************************************************************************************************/
+     /**
+     * @Route("/admin/category/edit/{id}",name="category/edit")
+     */
+     /*********************************************************************************************************/    
+
+
+     public function categoryEditAction(Request $request)
+     {
+
+      $user = $this->user();
+
+      if($user->role >= 2):
+        return $this->render('admin/admin.category.edit.html.twig', array(
+          'base_dir'      => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+          ));
+      else:
+        return $this->redirectToRoute('home');
+      endif;
+    }
+
   }
-
-}

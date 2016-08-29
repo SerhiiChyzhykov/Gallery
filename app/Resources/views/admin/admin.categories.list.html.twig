@@ -3,8 +3,7 @@
 		{% for row in photo|slice(0, 1) %}
 		<h6 class="panel-title no-margin-top text-semibold">
 			<a href="/admin/category/{{row.categories.id}}" class="color">{{row.categories.title}}</a>
-			<a href="?delete={{row.categories.id}}" class="text-muted"><i class="icon-x pull-right"></i></a>
-			<a href="/{{row.image}}" class="text-muted" download><i class="icon-pencil6 pull-right"></i></a>
+			<a href="/admin/category/edit/{{row.categories.id}}" class="text-muted" ><i class="icon-pencil6 pull-right"></i></a>
 		</h6>
 		{% endfor %}
 		<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
