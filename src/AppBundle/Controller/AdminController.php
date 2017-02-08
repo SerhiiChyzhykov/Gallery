@@ -23,7 +23,6 @@ class AdminController extends Controller
   {
 
     $title =  $request->get('title');
-    $articles = 'TEST';
 
     $categories = $this->getDoctrine()
     ->getRepository('AppBundle:categories')
@@ -38,7 +37,6 @@ class AdminController extends Controller
     ->groupBy('a.categories')
     ->getQuery()
     ->getResult();
-
 
     return $this->render('admin/menu.html.twig', array(
       'title'             => $title,
@@ -81,9 +79,7 @@ class AdminController extends Controller
         return $this->redirectToRoute('admin');
       }
 
-      $user = $this->user();
-
-      if($user->role >= 2):
+      if($this->user()->role >= 2):
         return $this->render('admin/index.html.twig', array(
          'title'     =>  'Dashboard',
          'comments'  =>  $comments,
@@ -372,9 +368,6 @@ class AdminController extends Controller
         return $this->redirectToRoute('home');
       endif;
     }
-
-
-
 
 
     /*********************************************************************************************************/   
