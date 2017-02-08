@@ -1,98 +1,115 @@
 {% extends '/admin/header.html.twig' %}
 {% block body %}
-<!-- Main content -->
-<div class="content">
-	{% for user in user %}
-	<div class="page-header page-header-default">
-		<div class="page-header-content">
-			<div class="page-title">
-				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{user.username}}</span></h4>
-			</div>
-			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+<!-- Page header -->
+<div class="page-header no-padding">
+	<div class="page-header-content">
+		<div class="page-title">
+			{% for user in user %}
+			<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{user.username}}</span> - Profile</h4>
+			<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+			{% endfor %}
 		</div>
-		<div class="breadcrumb-line">
+
+		<div class="breadcrumb-line no-margin"><a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
 			<ul class="breadcrumb">
-				<li><a href="/admin"><i class="icon-home2 position-left"></i> Home</a></li>
-				<li><a href="/admin/users"><i class="icon-users position-left"></i> Users</a></li>
-				<li class="active"><i class="icon-user position-left"></i> {{user.username}}</li>
+				<li><a href="/admin/"><i class="icon-home2 position-left"></i> Dashboard</a></li>
+				<li class="active"><i class="icon-user position-left"></i> Profile</li>
 			</ul>
-			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-		</div>
-	</div>
-	{% endfor %}
-	<!-- Page header -->
-	<div class="page-header">
-		<!-- Header content -->
-		<div class="page-header-content">
-			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
-		</div>
-		<!-- /header content -->
-		<!-- Toolbar -->
-		<div class="navbar navbar-default navbar-component navbar-xs">
-			<ul class="nav navbar-nav visible-xs-block">
-				<li class="full-width text-center">
-					<a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a>
+
+			<ul class="breadcrumb-elements">
+				<li><a href="#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-gear position-left"></i>
+						Settings
+						<span class="caret"></span>
+					</a>
+
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+						<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+						<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+						<li class="divider"></li>
+						<li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+					</ul>
 				</li>
 			</ul>
-			<div class="navbar-collapse collapse" id="navbar-filter">
-				<ul class="nav navbar-nav">
-					<li class="active">
-						<a href="#activity" data-toggle="tab" aria-expanded="true"><i class="icon-menu7 position-left"></i> Activity</a>
-					</li>
-					<li>
-						<a href="#photos" data-toggle="tab" aria-expanded="false"><i class="icon-images3 position-left"></i> Photos <span class="badge badge-success badge-inline position-right">{{photos}}</span></a>
-					</li>
-					<li>
-						<a href="#settings" data-toggle="tab" aria-expanded="false"><i class="icon-cog3 position-left"></i> Settings</a>
-					</li>
-				</ul>
-				<div class="navbar-right">
-					<ul class="nav navbar-nav">
-						<li class="disabled">
-							<a href="#"><i class="icon-stack-text position-left"></i> Notes</a>
-						</li>
-						<li class="disabled">
-							<a href="#"><i class="icon-collaboration position-left"></i> Friends</a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li class="disabled">
-									<a href="#"><i class="icon-image2"></i> Update cover</a>
-								</li>
-								<li class="disabled">
-									<a href="#"><i class="icon-clippy"></i> Update info</a>
-								</li>
-								<li class="disabled">
-									<a href="#"><i class="icon-make-group"></i> Manage sections</a>
-								</li>
-								<li class="disabled" class="divider"></li>
-								<li class="disabled">
-									<a href="#"><i class="icon-three-bars"></i> Activity log</a>
-								</li>
-								<li class="disabled">
-									<a href="#"><i class="icon-cog5"></i> Profile settings</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
 		</div>
-		<!-- /toolbar -->
 	</div>
 	<!-- /page header -->
-	<!-- Content area -->
-	<div class="content">
-			{% for key , m in message %}
-			<div class="alert bg-{{key}} alert-styled-left">
-				<button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
-				<span class="text-semibold">{{ m }}</span>
+	{% for user in user %}
+	<!-- Cover area -->
+	<div class="profile-cover">
+		<div class="profile-cover-img" style="background-image: url(/img/cover2.jpg)"></div>
+		<div class="media">
+			<div class="media-left">
+				<a href="#" class="profile-thumb">
+					{% if user.avatar != NULL %}
+					<img src="{{user.avatar}}" class="img-circle">
+					{% else %}
+					<img src="/img/user_icon.jpg" class="img-circle">
+					{% endif %}
+				</a>
 			</div>
-			{% endfor %}
+			<div class="media-body">
+				<h1>{{user.first_name}} {{user.last_name}}<small class="display-block">text</small></h1>
+			</div>
+			<div class="media-right media-middle">
+				<ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
+					<li><a href="#" class="btn btn-default"><i class="icon-file-picture position-left"></i> Cover image</a></li>
+					<li><a href="#" class="btn btn-default"><i class="icon-file-stats position-left"></i> Statistics</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- /cover area -->
+	{% endfor %}
+
+	<!-- Toolbar -->
+	<div class="navbar navbar-default navbar-xs content-group">
+		<ul class="nav navbar-nav visible-xs-block">
+			<li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+		</ul>
+
+		<div class="navbar-collapse collapse" id="navbar-filter">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true"><i class="icon-menu7 position-left"></i> Activity</a></li>
+				<li class=""><a href="#schedule" data-toggle="tab" aria-expanded="false"><i class="icon-calendar3 position-left"></i> Schedule <span class="badge badge-success badge-inline position-right">32</span></a></li>
+				<li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> Settings</a></li>
+			</ul>
+
+			<div class="navbar-right">
+				<ul class="nav navbar-nav">
+					<li><a href="#"><i class="icon-stack-text position-left"></i> Notes</a></li>
+					<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
+					<li><a href="#"><i class="icon-images3 position-left"></i> Photos</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
+							<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
+							<li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
+							<li class="divider"></li>
+							<li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
+							<li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- /toolbar -->
+
+	<div class="content">
+		{% for key , m in message %}
+		<div class="alert bg-{{key}} alert-styled-left">
+			<button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+			<span class="text-semibold">{{ m }}</span>
+		</div>
+		{% endfor %}
 		<!-- User profile -->
 		<div class="row">
-			<div class="col-lg-9">
+			<div class="col-lg-12">
 				<div class="tabbable">
 					<div class="tab-content">
 						<div class="tab-pane fade active in" id="activity">
@@ -226,53 +243,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-3">
-					<!-- User thumbnail -->
-					{% for user in user %}
-					<div class="thumbnail">
-						<div class="thumb thumb-rounded thumb-slide">
-							{% if user.avatar != NULL %}
-							<img src="{{user.avatar}}">
-							{% else %}
-							<img src="/img/user_icon.jpg">
-							{% endif %}
-							<div class="caption">
-								<span>
-									<a href="#" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
-									<a href="user_pages_profile.html" class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
-								</span>
-							</div>
-						</div>
-						<div class="caption text-center">
-							<h6 class="text-semibold no-margin">{{user.username}}
-								{% if user.first_name != NULL or user.last_name != NULL %}
-								<small class="display-block">{{user.first_name}} {{user.last_name}}</small>
-								{% endif %}
-							</h6>
-							{% if user.git != NULL or user.last_name != NULL or user.first_name != NULL %}
-							<ul class="icons-list mt-15">
-								{% if user.google != NULL  %}
-								<li>
-									<a href="{{user.google}}" data-popup="tooltip" title="" data-original-title="Google Drive"><i class="icon-google-drive"></i></a>
-								</li>
-								{% endif %}
-								{% if user.twitter != NULL  %}
-								<li>
-									<a href="{{user.twitter}}" data-popup="tooltip" title="" data-original-title="Twitter"><i class="icon-twitter"></i></a>
-								</li>
-								{% endif %}
-								{% if user.git != NULL  %}
-								<li>
-									<a href="{{user.git}}" data-popup="tooltip" title="" data-original-title="Github"><i class="icon-github"></i></a>
-								</li>
-								{% endif %}
-							</ul>
-							{% endif %}
-						</div>
-					</div>
-					{% endfor %}
-					<!-- /user thumbnail -->
 				</div>
 			</div>
 			<!-- /user profile -->

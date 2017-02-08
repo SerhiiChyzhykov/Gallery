@@ -38,7 +38,7 @@ class post
 
     /**
      * @var integer
-     * @ORM\ManyToOne(targetEntity="photo", inversedBy="post")
+     * @ORM\ManyToOne(targetEntity="photo", inversedBy="post" )
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id" , onDelete="CASCADE")
      */
     private $imageId;

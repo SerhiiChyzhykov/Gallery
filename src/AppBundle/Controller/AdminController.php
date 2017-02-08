@@ -160,7 +160,7 @@ class AdminController extends Controller
                   $em->persist($user);
                   $em->flush();
 
-                  $message['success'] = "User updated";
+                  $message['success'] = "Profile updated";
                 }else{$message['danger'] = "google missing";}
               }else{$message['danger'] = "git missing";}
             }else{$message['danger'] = "twitter missing";}
@@ -331,6 +331,51 @@ class AdminController extends Controller
         return $this->redirectToRoute('home');
       endif;
     }
+
+
+    /*********************************************************************************************************/   
+
+    /**
+     *@Route("/admin/photos/{id}",name="admin_photo")
+     */
+    
+    /*********************************************************************************************************/   
+
+    public function photoAction(Request $request,$id)
+    {
+      $user = $this->user();
+
+      $photo = $this->getDoctrine()
+      ->getRepository('AppBundle:photo')
+      ->createQueryBuilder('p')
+      ->where('p.id = :id')
+      ->setParameter('id',$id)
+      ->getQuery()
+      ->getResult();
+
+      if($image_id = $request->get('delete')){
+        $em = $this->getDoctrine()->getEntityManager();
+        $id = $em->getRepository('AppBundle:photo')->find($image_id);
+        $em->remove( $id );
+        $em->flush();
+        return $this->redirectToRoute('admin_photos');
+      }
+      
+      if($user->role >= 2):
+        return $this->render('admin/admin.photo.html.twig', array(
+         'user'   => $user,
+         'title'  => 'Photo',
+         'photo'  => $photo,
+         'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+         ));
+      else:
+        return $this->redirectToRoute('home');
+      endif;
+    }
+
+
+
+
 
     /*********************************************************************************************************/   
     /**
