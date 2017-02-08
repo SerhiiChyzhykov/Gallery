@@ -13,13 +13,13 @@
 				<li>
 					<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
 				</li>
-				<li class="active"><i class="icon-images2 position-left"></i>Edit category {{category[0].title}}</li>
+				<li class="active"><i class="icon-images2 position-left"></i>New category</li>
 			</ul>
 			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
 			<div class="navbar-right">
 				<ul class="nav navbar-nav">
 					<li class="active">
-						<a href="/admin/new_user"><i class="icon-add position-left"></i> New</a>
+						<a href="/admin/categories/new"><i class="icon-add position-left"></i> New</a>
 					</li>
 				</ul>
 			</div>
@@ -37,12 +37,12 @@
 							<div class="row">
 								<div class="col-md-6">
 									<label>Title</label>
-									<input type="text" value="{{category[0].title}}" required="required" class="form-control" name="title">
+									<input type="text" value="" required="required" class="form-control" name="title">
 								</div>
 							</div>
 						</div>
 						<div class="text-right">
-							<button type="submit" class="btn btn-primary" name="save" value="1">Save <i class="icon-arrow-right14 position-right"></i></button>
+							<button type="submit" class="btn btn-primary">Add <i class="icon-arrow-right14 position-right"></i></button>
 						</div>
 					</form>
 				</div>

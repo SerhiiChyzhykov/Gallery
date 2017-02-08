@@ -1,13 +1,15 @@
 <?php
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use AppBundle\Entity\categories;
+use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\user;
+use AppBundle\Entity\photo;
 
 class AdminController extends Controller
 {
@@ -679,19 +681,42 @@ class AdminController extends Controller
 
     /*********************************************************************************************************/
      /**
-     * @Route("/admin/category/edit/{id}",name="category/edit")
+     * @Route("/admin/category/edit/{id}",name="category-edit")
      */
      /*********************************************************************************************************/    
 
 
-     public function categoryEditAction(Request $request)
+     public function categoryEditAction(Request $request,$id)
      {
 
+      $message=[];
+
       $user = $this->user();
+      $id   = $request->get('id');
+
+      $category = $this->getDoctrine()
+      ->getRepository('AppBundle:categories')
+      ->createQueryBuilder('p')
+      ->where('p.id = :id')
+      ->setParameter('id',$id )
+      ->getQuery()
+      ->getResult();
+      if ($request->get('save')) {
+        $category_title   = $request->get('title');
+
+        $em = $this->getDoctrine()->getManager();
+        $category1 = $em->getRepository('AppBundle:categories')->find($id);
+        $category1->setTitle($category_title);
+        $em->persist($category1);
+        $em->flush();
+        return $this->redirect('/photo/'.$id);
+        return $this->redirect($this->generateUrl('category-edit', $category_title));
+      }
 
       if($user->role >= 2):
         return $this->render('admin/admin.category.edit.html.twig', array(
           'base_dir'      => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+          'category'      => $category
           ));
       else:
         return $this->redirectToRoute('home');
@@ -699,7 +724,43 @@ class AdminController extends Controller
     }
 
 
+    /*********************************************************************************************************/
+     /**
+     * @Route("/admin/categories/new",name="category-new")
+     */
+     /*********************************************************************************************************/    
 
 
+     public function categoryNewAction(Request $request)
+     {
 
+      $message=[];
+
+      $user = $this->user();
+
+      $category_title = $request->get('title');
+
+      if (isset($category_title)) {
+        $category = new Categories();
+        $em = $this->getDoctrine()->getManager();
+        $category->setTitle($category_title);
+        $em->persist($category);
+        $em->flush();
+
+        return $this->redirectToRoute('category-new');  
+      }
+
+      if ($user != 'anon.') {
+        if($user->role >= 2){
+          return $this->render('admin/admin.category.new.html.twig', array(
+            'base_dir'      => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            'message'      => $message
+            ));
+        }else{
+          return $this->redirectToRoute('home');
+        }
+      }else{
+        return $this->redirectToRoute('home');
+      }
+    }
   }

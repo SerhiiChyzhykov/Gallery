@@ -111,13 +111,17 @@
 									<span class="help-block">+99-99-9999-9999</span>
 								</div>
 								<div class="col-md-6">
+
 									<label for="image" class="display-block">Upload profile image</label>
 									<div class="uploader">
-										<input type="file" class="file-styled" name="image" id="image">
+										<input type="file" class="file-styled" name="image" id="image" value="{% if row.avatar %}{{ row.avatar }}{% endif %}">
 										<span class="filename" style="-webkit-user-select: none;">No file selected</span>
 										<span class="action btn bg-warning" style="-webkit-user-select: none;">Choose File</span>
 									</div>
 									<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+									{% if row.avatar %}
+									<img src="{{row.avatar}}">
+									{% endif %}
 								</div>
 							</div>
 						</div>

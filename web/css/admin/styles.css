@@ -1211,3 +1211,12 @@
 		min-height: 325px;
 	}
 }
+
+
+
+
+.navbar-nav > .dropdown-user img {
+    max-height: 36px !important;
+    margin-top: -2.5px;
+    border-radius: 50%;
+}
