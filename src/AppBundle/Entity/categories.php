@@ -14,6 +14,7 @@ class categories
 {
       /**
      * @ORM\OneToMany(targetEntity="photo", mappedBy="categories")
+     * @ORM\JoinColumn(name="photo", referencedColumnName="id" , onDelete="CASCADE")
      */
     protected $photo;
 

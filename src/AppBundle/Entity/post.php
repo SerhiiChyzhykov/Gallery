@@ -17,7 +17,7 @@ class post
     /**
      * @var integer
      * @ORM\ManyToOne(targetEntity="user", inversedBy="post")
-     * @ORM\JoinColumn(name="username_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="username_id", referencedColumnName="id" , onDelete="CASCADE")
      */
     protected $usernameId;
     /**
@@ -39,7 +39,7 @@ class post
     /**
      * @var integer
      * @ORM\ManyToOne(targetEntity="photo", inversedBy="post")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id" , onDelete="CASCADE")
      */
     private $imageId;
 

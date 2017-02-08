@@ -14,12 +14,12 @@ class photo
 {
     /**
      * @ORM\ManyToOne(targetEntity="categories", inversedBy="photo")
-     * @ORM\JoinColumn(name="categories_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="categories_id", referencedColumnName="id" , onDelete="CASCADE")
      */
     protected $categories;
      /**
      * @ORM\ManyToOne(targetEntity="user", inversedBy="photo")
-     * @ORM\JoinColumn(name="username_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="username_id", referencedColumnName="id" , onDelete="CASCADE")
      */
      protected $username;
     /**

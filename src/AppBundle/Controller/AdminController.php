@@ -306,22 +306,19 @@ class AdminController extends Controller
       $repository = $this->getDoctrine()
       ->getRepository('AppBundle:photo');
       $query = $repository->createQueryBuilder('p')
-      ->where('p.username = :id')
-      ->setParameter('id',$user)
       ->getQuery();
       $photo = $query->getResult();
 
       $paginator  = $this->get('knp_paginator');
-      $pagination = $paginator->paginate(
-        $photo,$request->query->getInt('page', 1),8);
+      $pagination = $paginator->paginate($photo,$request->query->getInt('page', 1),8);
 
-      if($delete = $request->get('delete')):
-        $em = $this->getDoctrine()->getManager();
-      $delete = $em->getRepository('AppBundle:photo')->findOneById($delete);
-      $em->remove($delete);
-      $em->flush();
-      return $this->redirectToRoute('admin_photos');
-      endif;
+      if($image_id = $request->get('delete')){
+        $em = $this->getDoctrine()->getEntityManager();
+        $id = $em->getRepository('AppBundle:photo')->find($image_id);
+        $em->remove( $id );
+        $em->flush();
+        return $this->redirectToRoute('admin_photos');
+      }
       
       if($user->role >= 2):
         return $this->render('admin/admin.photos.html.twig', array(
