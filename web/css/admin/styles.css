@@ -1191,32 +1191,14 @@
 .icon-unfold:before{content:"\e9fe";}
 .icon-versions:before{content:"\e9ff";}
 .icon-x:before{content:"\ea00";}
-.thumbs{
-	min-height: 160px;
-}
-
-@media (min-width: 768px) {
-	.thumbs{
-		min-height: 160px;
-	}
-}
-
-@media (min-width: 1460px) {
-	.thumbs{
-		min-height: 230px;
-	}
-}
-@media (min-width: 2560px) {
-	.thumbs{
-		min-height: 325px;
-	}
-}
-
-
-
 
 .navbar-nav > .dropdown-user img {
     max-height: 36px !important;
     margin-top: -2.5px;
     border-radius: 50%;
 }
+
+.caption {
+	min-height: 0 !important;
+}
+
