@@ -79,17 +79,23 @@ class AdminController extends Controller
         return $this->redirectToRoute('admin');
       }
 
-      if($this->user()->role >= 2):
-        return $this->render('admin/index.html.twig', array(
-         'title'     =>  'Dashboard',
-         'comments'  =>  $comments,
-         'photos'    =>  $photos ,
-         'date'      =>  $date,
-         'base_dir'  =>  realpath($this->container->getParameter('kernel.root_dir').'/..'),
-         ));
-      else:
+      $user = $this->user();
+
+      if($user != 'anon.'){
+        if ($user->role >= 2) {
+          return $this->render('admin/index.html.twig', array(
+           'title'     =>  'Dashboard',
+           'comments'  =>  $comments,
+           'photos'    =>  $photos ,
+           'date'      =>  $date,
+           'base_dir'  =>  realpath($this->container->getParameter('kernel.root_dir').'/..'),
+           ));
+        }else{
+          return $this->redirectToRoute('home');
+        }
+      }else{
         return $this->redirectToRoute('home');
-      endif;
+      }
     }
     /*********************************************************************************************************/   
      /**
@@ -120,14 +126,15 @@ class AdminController extends Controller
           return 1;
         return 0;
       }
-      $em = $this->getDoctrine()->getManager();
-      $query = $em->createQuery(
-        'SELECT p
-        FROM AppBundle:user p
-        WHERE p.id = :id'
-        )->setParameter('id', $user->id);
+      if($user != 'anon.'){
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+          'SELECT p
+          FROM AppBundle:user p
+          WHERE p.id = :id'
+          )->setParameter('id', $user->id);
 
-      $db_username = $query->getResult();
+        $db_username = $query->getResult();
 
         #if (isset($_FILES['image'])) {
         #if (!empty($_FILES['image'])) {
@@ -137,81 +144,86 @@ class AdminController extends Controller
              # $filename = DFileHelper::getRandomFileName($extension);
             # $target =  'img/avatar/' . $filename . '.' . $extension;
              # if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
-      if(isset($last_name) && isset($first_name) && isset($twitter) && isset($git) && isset($google)){
-        if(!empty($last_name) ){
-          if(!empty($first_name)){
-            if(!empty($twitter)){
-              if(!empty($git)){
-                if(!empty($google)){
+        if(isset($last_name) && isset($first_name) && isset($twitter) && isset($git) && isset($google)){
+          if(!empty($last_name) ){
+            if(!empty($first_name)){
+              if(!empty($twitter)){
+                if(!empty($git)){
+                  if(!empty($google)){
 
-                  $em = $this->getDoctrine()->getManager();
-                  $user = $em->getRepository('AppBundle:user')->find($user->id);
-                  $user->setUsername($user->username);
-                  $user->setlast_name($last_name);
-                  $user->settwitter($twitter);
-                  $user->setgoogle($google);
-                  $user->setgit($git);
-                  $user->setrole($user->role);
-                  $user->setfirst_name($first_name);
-                  $em->persist($user);
-                  $em->flush();
+                    $em = $this->getDoctrine()->getManager();
+                    $user = $em->getRepository('AppBundle:user')->find($user->id);
+                    $user->setUsername($user->username);
+                    $user->setlast_name($last_name);
+                    $user->settwitter($twitter);
+                    $user->setgoogle($google);
+                    $user->setgit($git);
+                    $user->setrole($user->role);
+                    $user->setfirst_name($first_name);
+                    $em->persist($user);
+                    $em->flush();
 
-                  $message['success'] = "Profile updated";
-                }else{$message['danger'] = "google missing";}
-              }else{$message['danger'] = "git missing";}
-            }else{$message['danger'] = "twitter missing";}
-          }else{$message['danger'] = "first_name missing";}
-        }else{$message['danger'] = "last_name missing";}
-      }
+                    $message['success'] = "Profile updated";
+                  }else{$message['danger'] = "google missing";}
+                }else{$message['danger'] = "git missing";}
+              }else{$message['danger'] = "twitter missing";}
+            }else{$message['danger'] = "first_name missing";}
+          }else{$message['danger'] = "last_name missing";}
+        }
            # }else{$message['danger'] = "You can not download the file. Check permissions to the directory ( read / write)";}
          # }else{$message['danger'] = "File with this name already exists";}
         #}else{$message['danger'] = "You can upload files : JPEG, GIF, BMP, PNG";}
       #}
    # }
 
-      $repository = $this->getDoctrine()
-      ->getRepository('AppBundle:user');
+        $repository = $this->getDoctrine()
+        ->getRepository('AppBundle:user');
 
-      $query = $repository->createQueryBuilder('p')
-      ->where('p.id = :id')
-      ->setMaxResults(1)
-      ->setParameter('id',$user )
-      ->getQuery();
+        $query = $repository->createQueryBuilder('p')
+        ->where('p.id = :id')
+        ->setMaxResults(1)
+        ->setParameter('id',$user )
+        ->getQuery();
 
-      $user_profile = $query->getResult();
+        $user_profile = $query->getResult();
 
-      $repository = $this->getDoctrine()
-      ->getRepository('AppBundle:photo');
-      $query = $repository->createQueryBuilder('p')
-      ->where('p.username = :id')
-      ->setParameter('id',$user )
-      ->getQuery();
-      $photo = $query->getResult();
+        $repository = $this->getDoctrine()
+        ->getRepository('AppBundle:photo');
+        $query = $repository->createQueryBuilder('p')
+        ->where('p.username = :id')
+        ->setParameter('id',$user )
+        ->getQuery();
+        $photo = $query->getResult();
 
-      $qb = $repository->createQueryBuilder('a');
-      $qb->select('COUNT(a)');
-      $qb->where('a.username = :usernameId');
-      $qb->setParameter('usernameId', $user );
+        $qb = $repository->createQueryBuilder('a');
+        $qb->select('COUNT(a)');
+        $qb->where('a.username = :usernameId');
+        $qb->setParameter('usernameId', $user );
 
-      $photos = $qb->getQuery()->getSingleScalarResult();
+        $photos = $qb->getQuery()->getSingleScalarResult();
 
-      $paginator  = $this->get('knp_paginator');
-      $pagination = $paginator->paginate(
-        $photo,$request->query->getInt('page', 1),8);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+          $photo,$request->query->getInt('page', 1),8);
+      }
 
-      if($user->role >= 2):
-        return $this->render('admin/admin.profile.html.twig', array(
-         'user'     => $user_profile,
-         'photo'    => $photo,
-         'photos'   => $photos,
-         'title'    => $user,
-         'message'  =>  $message,
-         'pagination' => $pagination,
-         'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-         ));
-      else:
+      if($user != 'anon.'){
+        if ($user->role >= 2) {
+          return $this->render('admin/admin.profile.html.twig', array(
+           'user'     => $user_profile,
+           'photo'    => $photo,
+           'photos'   => $photos,
+           'title'    => $user,
+           'message'  =>  $message,
+           'pagination' => $pagination,
+           'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+           ));
+        }else{
+          return $this->redirectToRoute('home');
+        }
+      }else{
         return $this->redirectToRoute('home');
-      endif;
+      }
     }
     /*********************************************************************************************************/   
     /**
@@ -226,15 +238,19 @@ class AdminController extends Controller
       $query = $repository->createQueryBuilder('p')->getQuery();
       $users = $query->getResult();
 
-      if($user->role >= 2):
-        return $this->render('admin/admin.users.html.twig', array(
-         'users' => $users,
-         'title' => 'Users',
-         'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-         ));
-      else:
+      if($user != 'anon.'){
+        if ($user->role >= 2) {
+          return $this->render('admin/admin.users.html.twig', array(
+           'users' => $users,
+           'title' => 'Users',
+           'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+           ));
+        }else{
+          return $this->redirectToRoute('home');
+        }
+      }else{
         return $this->redirectToRoute('home');
-      endif;
+      }
     }
 
     /*********************************************************************************************************/   
@@ -316,16 +332,20 @@ class AdminController extends Controller
         return $this->redirectToRoute('admin_photos');
       }
       
-      if($user->role >= 2):
-        return $this->render('admin/admin.photos.html.twig', array(
-         'pagination' => $pagination,
-         'user' => $user,
-         'title' => 'Photos',
-         'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-         ));
-      else:
+      if($user != 'anon.'){
+        if ($user->role >= 2) {
+          return $this->render('admin/admin.photos.html.twig', array(
+           'pagination' => $pagination,
+           'user' => $user,
+           'title' => 'Photos',
+           'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+           ));
+        }else{
+          return $this->redirectToRoute('home');
+        }
+      }else{
         return $this->redirectToRoute('home');
-      endif;
+      }
     }
 
 
@@ -450,16 +470,18 @@ class AdminController extends Controller
       }else{$message['danger'] = "You can upload files : JPEG, GIF, BMP, PNG";}
     }
   }
-
-  if($user->role >= 2){
-    return $this->render('admin/admin.new_user.html.twig', array(
-     'user' => $user,
-     'title' => 'New User',
-     'message' => $message,
-     'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-     ));
-  }
-  else{
+  if($user != 'anon.'){
+    if ($user->role >= 2) {
+      return $this->render('admin/admin.new_user.html.twig', array(
+       'user' => $user,
+       'title' => 'New User',
+       'message' => $message,
+       'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+       ));
+    }else{
+      return $this->redirectToRoute('home');
+    }
+  }else{
     return $this->redirectToRoute('home');
   }
   
@@ -542,17 +564,21 @@ class AdminController extends Controller
     }
   }
 
-  if($user->role >= 2):
-    return $this->render('admin/admin.edit_user.html.twig', array(
-     'user' => $user,
-     'title' => 'Edit User',
-     'db_username' => $db_username,
-     'message' => $message,
-     'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-     ));
-  else:
+  if($user != 'anon.'){
+    if ($user->role >= 2) {
+      return $this->render('admin/admin.edit_user.html.twig', array(
+       'user' => $user,
+       'title' => 'Edit User',
+       'db_username' => $db_username,
+       'message' => $message,
+       'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+       ));
+    }else{
+      return $this->redirectToRoute('home');
+    }
+  }else{
     return $this->redirectToRoute('home');
-  endif;
+  }
 }
 
 
@@ -644,15 +670,19 @@ class AdminController extends Controller
 
       $user = $this->user();
 
-      if($user->role >= 2):
-        return $this->render('admin/admin.category.html.twig', array(
-          'pagination'    => $pagination,
-          'category'     => $category,
-          'base_dir'      =>  realpath($this->container->getParameter('kernel.root_dir').'/..'),
-          ));
-      else:
+      if($user != 'anon.'){
+        if ($user->role >= 2) {
+          return $this->render('admin/admin.category.html.twig', array(
+            'pagination'    => $pagination,
+            'category'     => $category,
+            'base_dir'      =>  realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            ));
+        }else{
+          return $this->redirectToRoute('home');
+        }
+      }else{
         return $this->redirectToRoute('home');
-      endif;
+      }
     }
 
 
@@ -668,53 +698,58 @@ class AdminController extends Controller
 
       $user = $this->user();
 
-      if($user->role >= 2):
-        return $this->render('admin/admin.categories.html.twig', array(
+      if($user != 'anon.'){
+        if ($user->role >= 2) {
+         return $this->render('admin/admin.categories.html.twig', array(
           'base_dir'      => realpath($this->container->getParameter('kernel.root_dir').'/..'),
           ));
-      else:
+       }else{
         return $this->redirectToRoute('home');
-      endif;
+      }
+    }else{
+      return $this->redirectToRoute('home');
     }
 
-    public function categorieslistAction(Request $request)
-    {
-      $message = [];
+  }
 
-      $count = $this->getDoctrine()->getManager()
-      ->getRepository('AppBundle:categories')
-      ->createQueryBuilder('a')
-      ->select('COUNT(a)')
-      ->getQuery()
-      ->getSingleScalarResult();
+  public function categorieslistAction(Request $request)
+  {
+    $message = [];
 
-      $id = rand(1,$count);
+    $count = $this->getDoctrine()->getManager()
+    ->getRepository('AppBundle:categories')
+    ->createQueryBuilder('a')
+    ->select('COUNT(a)')
+    ->getQuery()
+    ->getSingleScalarResult();
 
-      $photo = $this->getDoctrine()
-      ->getRepository('AppBundle:photo')
-      ->createQueryBuilder('p')
-      ->orderBy('p.categories')
-      ->where('p.categories = :id')
-      ->setMaxResults(1)
-      ->setParameter('id',$id )
-      ->getQuery()
-      ->getResult();
+    $id = rand(1,$count);
 
-      $user = $this->user();
+    $photo = $this->getDoctrine()
+    ->getRepository('AppBundle:photo')
+    ->createQueryBuilder('p')
+    ->orderBy('p.categories')
+    ->where('p.categories = :id')
+    ->setMaxResults(1)
+    ->setParameter('id',$id )
+    ->getQuery()
+    ->getResult();
 
-      if($user->role >= 2):
-        return $this->render('admin/admin.categories.list.html.twig', array(
-          'photo'    => $photo,
-          'message'  => $message,
-          'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-          ));
-      else:
-        return $this->redirectToRoute('home');
-      endif;
-    }
+    $user = $this->user();
+
+    if($user->role >= 2):
+      return $this->render('admin/admin.categories.list.html.twig', array(
+        'photo'    => $photo,
+        'message'  => $message,
+        'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+        ));
+    else:
+      return $this->redirectToRoute('home');
+    endif;
+  }
 
 
-    /*********************************************************************************************************/
+  /*********************************************************************************************************/
      /**
      * @Route("/admin/category/edit/{id}",name="category-edit")
      */
@@ -748,7 +783,7 @@ class AdminController extends Controller
         return $this->redirect($this->generateUrl('category-edit', $category_title));
       }
 
-      if($user->role >= 2):
+      if($user->role >= 2 and $user != 'anon.'):
         return $this->render('admin/admin.category.edit.html.twig', array(
           'base_dir'      => realpath($this->container->getParameter('kernel.root_dir').'/..'),
           'category'      => $category
@@ -784,6 +819,7 @@ class AdminController extends Controller
 
         return $this->redirectToRoute('category-new');  
       }
+
 
       if ($user != 'anon.') {
         if($user->role >= 2){

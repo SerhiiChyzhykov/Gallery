@@ -15,6 +15,7 @@
 					<li>
 						<a href="/admin/category/{{row.id}}" id="layout2">
 							{{row.title}}
+							{% if categories_count %}
 							<span class="label bg-warning-400">
 								{% for key,rows in categories_count %}
 								{% if row.id == key + 1 %}
@@ -22,6 +23,7 @@
 								{% endif %}
 								{% endfor %}
 							</span>
+							{% endif %}
 						</a>
 					</li>
 				</li>
