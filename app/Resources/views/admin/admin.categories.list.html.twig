@@ -1,3 +1,4 @@
+{% if photo %}
 <div class="panel bg-{{ random(['primary', 'slate', 'grey', 'brown', 'orange', 'green', 'teal', 'blue', 'indigo', 'purple', 'violet', 'pink']) }} panel-bordered col-lg-3 col-sm-2" style="margin: 0px 5px 5px 0px;">
 	<div class="panel-heading">
 		{% for row in photo|slice(0, 1) %}
@@ -25,4 +26,5 @@
 			</div>
 		</div>
 	</div>
+	{% endif %}
 

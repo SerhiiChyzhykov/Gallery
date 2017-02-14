@@ -1,30 +1,30 @@
 {% extends '/admin/header.html.twig' %}
 {% block body %}
-<div class="content">
-	<div class="page-header page-header-default">
-		<div class="page-header-content">
-			<div class="page-title">
-				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Edit User</span></h4>
-			</div>
-			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+<div class="page-header page-header-default">
+	<div class="page-header-content">
+		<div class="page-title">
+		<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">New category</span></h4>
 		</div>
-		<div class="breadcrumb-line">
-			<ul class="breadcrumb">
-				<li>
-					<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
+		<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+	</div>
+	<div class="breadcrumb-line">
+		<ul class="breadcrumb">
+			<li>
+				<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
+			</li>
+			<li class="active"><i class="icon-images2 position-left"></i>New category</li>
+		</ul>
+		<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+		<div class="navbar-right">
+			<ul class="nav navbar-nav">
+				<li class="active">
+					<a href="/admin/categories/new"><i class="icon-add position-left"></i> New</a>
 				</li>
-				<li class="active"><i class="icon-images2 position-left"></i>New category</li>
 			</ul>
-			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-			<div class="navbar-right">
-				<ul class="nav navbar-nav">
-					<li class="active">
-						<a href="/admin/categories/new"><i class="icon-add position-left"></i> New</a>
-					</li>
-				</ul>
-			</div>
 		</div>
 	</div>
+</div>
+<div class="content">
 	<div class="tab-pane fade active in" id="settings">
 		<!-- Account settings -->
 		<div class="panel panel-flat">

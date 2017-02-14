@@ -1,51 +1,51 @@
 {% extends '/admin/header.html.twig' %}
 {% block body %}
-<div class="content">
-	<div class="page-header page-header-default">
-		<div class="page-header-content">
-			<div class="page-title">
-				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Users</span></h4>
-			</div>
-			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+<div class="page-header page-header-default">
+	<div class="page-header-content">
+		<div class="page-title">
+		<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Users</span></h4>
 		</div>
-		<div class="breadcrumb-line">
-			<ul class="breadcrumb">
-				<li>
-					<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
+		<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+	</div>
+	<div class="breadcrumb-line">
+		<ul class="breadcrumb">
+			<li>
+				<a href="/admin"><i class="icon-home2 position-left"></i> Home</a>
+			</li>
+			<li class="active"><i class="icon-users position-left"></i>Users</li>
+		</ul>
+		<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+		<div class="navbar-right">
+			<ul class="nav navbar-nav">
+				<li class="active">
+					<a href="/admin/new_user"><i class="icon-add position-left"></i> New</a>
 				</li>
-				<li class="active"><i class="icon-users position-left"></i>Users</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li class="disabled">
+							<a href="#"><i class="icon-image2"></i> Update cover</a>
+						</li>
+						<li class="disabled">
+							<a href="#"><i class="icon-clippy"></i> Update info</a>
+						</li>
+						<li class="disabled">
+							<a href="#"><i class="icon-make-group"></i> Manage sections</a>
+						</li>
+						<li class="disabled"></li>
+						<li class="disabled">
+							<a href="#"><i class="icon-three-bars"></i> Activity log</a>
+						</li>
+						<li class="disabled">
+							<a href="#"><i class="icon-cog5"></i> Profile settings</a>
+						</li>
+					</ul>
+				</li>
 			</ul>
-			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-			<div class="navbar-right">
-				<ul class="nav navbar-nav">
-					<li class="active">
-						<a href="/admin/new_user"><i class="icon-add position-left"></i> New</a>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
-						<ul class="dropdown-menu dropdown-menu-right">
-							<li class="disabled">
-								<a href="#"><i class="icon-image2"></i> Update cover</a>
-							</li>
-							<li class="disabled">
-								<a href="#"><i class="icon-clippy"></i> Update info</a>
-							</li>
-							<li class="disabled">
-								<a href="#"><i class="icon-make-group"></i> Manage sections</a>
-							</li>
-							<li class="disabled"></li>
-							<li class="disabled">
-								<a href="#"><i class="icon-three-bars"></i> Activity log</a>
-							</li>
-							<li class="disabled">
-								<a href="#"><i class="icon-cog5"></i> Profile settings</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
 		</div>
 	</div>
+</div>
+<div class="content">
 	<div class="row">
 		{% for row in users %}
 		<div class="col-lg-3 col-md-6">
@@ -98,8 +98,7 @@
 					{% endif %}
 				</div>
 			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
 	</div>
-</div>
-{% endblock %}
+	{% endblock %}

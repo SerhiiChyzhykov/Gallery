@@ -1,32 +1,38 @@
 {% extends '/admin/header.html.twig' %}
 {% block body %}
 <!-- Main content -->
-<div class="content">
-	<!-- Page header -->
-	<div class="page-header page-header-default">
-		<div class="page-header-content">
-			<div class="page-title">
-				<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span></h4>
-			</div>
-			<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+<!-- Page header -->
+<div class="page-header page-header-default">
+	<div class="page-header-content">
+		<div class="page-title">
+			<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Dashboard</span></h4>
 		</div>
-		<div class="breadcrumb-line">
-			<ul class="breadcrumb">
-				<li class="active"><i class="icon-home2 position-left"></i> Home</li>
-			</ul>
-			<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-		</div>
+		<a class="heading-elements-toggle"><i class="icon-more"></i></a>
 	</div>
-	<!-- /page header -->
-	<!-- Content area -->
+	<div class="breadcrumb-line">
+		<ul class="breadcrumb">
+			<li class="active"><i class="icon-home2 position-left"></i> Dashboard</li>
+		</ul>
+		<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+	</div>
+</div>
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
 	<!-- Daily financials -->
+	
 	<div class="panel panel-flat">
 		<div class="panel-heading">
+			{% if photos %}
 			<h6 class="panel-title"><a href="/admin/photos">New Images</a></h6>
+			{% else %}
+			<h6 class="panel-title">No images</h6>
+			{% endif %}
 			<a class="heading-elements-toggle">
 				<i class="icon-more"></i>
 			</a>
 		</div>
+		{% if photos %}
 		<div class="panel-body">
 			<div class="row">
 				{% for row in photos %}
@@ -47,14 +53,20 @@
 			</div>
 			<!-- /daily financials -->
 		</div>
+		{% endif %}
 	</div>
 	<div class="panel panel-flat col-sm-6">
 		<div class="panel-heading">
+			{% if comments %}
 			<h6 class="panel-title"><a href="/admin/comments">New Comments</a></h6>
+			{% else %}
+			<h6 class="panel-title">No comments</h6>
+			{% endif %}
 			<a class="heading-elements-toggle">
 				<i class="icon-more"></i>
 			</a>
 		</div>
+		{% if comments %}
 		<div class="panel-body">
 			<div class="table-responsive">
 				<table class="table text-nowrap">
@@ -109,6 +121,7 @@
 				</table>
 			</div>
 		</div>
+		{% endif %}
 		<!-- /dashboard content -->
 	</div>
 	<div class="panel panel-flat col-sm-6">

@@ -5,245 +5,248 @@
 	<div class="page-header-content">
 		<div class="page-title">
 			{% for user in user %}
-			<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{user.username}}</span> - Profile</h4>
-			<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+			<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{user.username}}</span></h4>
 			{% endfor %}
 		</div>
+		<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+	</div>
+	<div class="breadcrumb-line no-margin"><a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+		<ul class="breadcrumb">
+			<li><a href="/admin"><i class="icon-home2 position-left"></i> Dashboard</a></li>
+			<li><a href="/admin/users"><i class="icon-users position-left"></i> Users</a></li>
+			{% for user in user %}
+			<li class="active"><i class="icon-user position-left"></i>{{user.username}}</li>
+			{% endfor %}
+		</ul>
 
-		<div class="breadcrumb-line no-margin"><a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-			<ul class="breadcrumb">
-				<li><a href="/admin/"><i class="icon-home2 position-left"></i> Dashboard</a></li>
-				<li class="active"><i class="icon-user position-left"></i> Profile</li>
+		<ul class="breadcrumb-elements">
+			<li><a href="#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<i class="icon-gear position-left"></i>
+					Settings
+					<span class="caret"></span>
+				</a>
+
+				<ul class="dropdown-menu dropdown-menu-right">
+					<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+					<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+					<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+					<li class="divider"></li>
+					<li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+<!-- /page header -->
+{% for user in user %}
+<!-- Cover area -->
+<div class="profile-cover">
+	<div class="profile-cover-img" style="background-image: url(/img/cover2.jpg)"></div>
+	<div class="media">
+		<div class="media-left">
+			<a href="#" class="profile-thumb">
+				{% if user.avatar != NULL %}
+				<img src="{{user.avatar}}" class="img-circle">
+				{% else %}
+				<img src="/img/user_icon.jpg" class="img-circle">
+				{% endif %}
+			</a>
+		</div>
+		<div class="media-body">
+			<h1>{{user.first_name}} {{user.last_name}}<small class="display-block">text</small></h1>
+		</div>
+		<div class="media-right media-middle">
+			<ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
+				<li><a href="#" class="btn btn-default"><i class="icon-file-picture position-left"></i> Cover image</a></li>
+				<li><a href="#" class="btn btn-default"><i class="icon-file-stats position-left"></i> Statistics</a></li>
 			</ul>
+		</div>
+	</div>
+</div>
+<!-- /cover area -->
+{% endfor %}
 
-			<ul class="breadcrumb-elements">
-				<li><a href="#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+<!-- Toolbar -->
+<div class="navbar navbar-default navbar-xs content-group">
+	<ul class="nav navbar-nav visible-xs-block">
+		<li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+	</ul>
+
+	<div class="navbar-collapse collapse" id="navbar-filter">
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true"><i class="icon-menu7 position-left"></i> Activity</a></li>
+			<li class=""><a href="#schedule" data-toggle="tab" aria-expanded="false"><i class="icon-calendar3 position-left"></i> Schedule <span class="badge badge-success badge-inline position-right">32</span></a></li>
+			<li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> Settings</a></li>
+		</ul>
+
+		<div class="navbar-right">
+			<ul class="nav navbar-nav">
+				<li><a href="#"><i class="icon-stack-text position-left"></i> Notes</a></li>
+				<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
+				<li><a href="#"><i class="icon-images3 position-left"></i> Photos</a></li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-gear position-left"></i>
-						Settings
-						<span class="caret"></span>
-					</a>
-
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
 					<ul class="dropdown-menu dropdown-menu-right">
-						<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
-						<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
-						<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+						<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
+						<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
+						<li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
 						<li class="divider"></li>
-						<li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+						<li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
+						<li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
 					</ul>
 				</li>
 			</ul>
 		</div>
 	</div>
-	<!-- /page header -->
-	{% for user in user %}
-	<!-- Cover area -->
-	<div class="profile-cover">
-		<div class="profile-cover-img" style="background-image: url(/img/cover2.jpg)"></div>
-		<div class="media">
-			<div class="media-left">
-				<a href="#" class="profile-thumb">
-					{% if user.avatar != NULL %}
-					<img src="{{user.avatar}}" class="img-circle">
-					{% else %}
-					<img src="/img/user_icon.jpg" class="img-circle">
-					{% endif %}
-				</a>
-			</div>
-			<div class="media-body">
-				<h1>{{user.first_name}} {{user.last_name}}<small class="display-block">text</small></h1>
-			</div>
-			<div class="media-right media-middle">
-				<ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
-					<li><a href="#" class="btn btn-default"><i class="icon-file-picture position-left"></i> Cover image</a></li>
-					<li><a href="#" class="btn btn-default"><i class="icon-file-stats position-left"></i> Statistics</a></li>
-				</ul>
-			</div>
-		</div>
+</div>
+<!-- /toolbar -->
+
+<div class="content">
+	{% for key , m in message %}
+	<div class="alert bg-{{key}} alert-styled-left">
+		<button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+		<span class="text-semibold">{{ m }}</span>
 	</div>
-	<!-- /cover area -->
 	{% endfor %}
-
-	<!-- Toolbar -->
-	<div class="navbar navbar-default navbar-xs content-group">
-		<ul class="nav navbar-nav visible-xs-block">
-			<li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
-		</ul>
-
-		<div class="navbar-collapse collapse" id="navbar-filter">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true"><i class="icon-menu7 position-left"></i> Activity</a></li>
-				<li class=""><a href="#schedule" data-toggle="tab" aria-expanded="false"><i class="icon-calendar3 position-left"></i> Schedule <span class="badge badge-success badge-inline position-right">32</span></a></li>
-				<li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> Settings</a></li>
-			</ul>
-
-			<div class="navbar-right">
-				<ul class="nav navbar-nav">
-					<li><a href="#"><i class="icon-stack-text position-left"></i> Notes</a></li>
-					<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
-					<li><a href="#"><i class="icon-images3 position-left"></i> Photos</a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
-						<ul class="dropdown-menu dropdown-menu-right">
-							<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
-							<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
-							<li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
-							<li class="divider"></li>
-							<li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
-							<li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<!-- /toolbar -->
-
-	<div class="content">
-		{% for key , m in message %}
-		<div class="alert bg-{{key}} alert-styled-left">
-			<button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
-			<span class="text-semibold">{{ m }}</span>
-		</div>
-		{% endfor %}
-		<!-- User profile -->
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="tabbable">
-					<div class="tab-content">
-						<div class="tab-pane fade active in" id="activity">
-							<!-- Timeline -->
-							<div class="timeline timeline-left content-group">
-								<div class="timeline-container">
-									<!-- Sales stats -->
-									<div class="timeline-row">
-										<div class="timeline-icon">
-											<a href="#"><img src="assets/images/demo/users/face24.jpg" alt=""></a>
-										</div>
-										<div class="panel panel-flat timeline-content">
-											<div class="panel-heading">
-												<h6 class="panel-title">Daily statistics</h6>
-												<div class="heading-elements">
-													<span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
-													<ul class="icons-list">
-														<li><a data-action="reload"></a></li>
-													</ul>
-												</div>
-												<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
-												<div class="panel-body">
-													<div class="chart-container">
-														<div class="chart has-fixed-height" id="sales" _echarts_instance_="1470923970000" style="-webkit-tap-highlight-color: transparent; -webkit-user-select: none; cursor: default; background-color: rgba(0, 0, 0, 0);"><div style="position: relative; overflow: hidden; width: 740px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1087px; height: 400px; -webkit-user-select: none;"></div><canvas width="740" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 740px; height: 400px; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="740" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 740px; height: 400px; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="740" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 740px; height: 400px; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border: 0px solid rgb(51, 51, 51); white-space: nowrap; transition: left 0.4s, top 0.4s; border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 483px; top: 118.5px; background-color: rgba(0, 0, 0, 0.8);">Sat<br>Profit : 220<br>Income : 450<br>Expenses : -230</div></div></div>
-													</div>
+	<!-- User profile -->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="tabbable">
+				<div class="tab-content">
+					<div class="tab-pane fade active in" id="activity">
+						<!-- Timeline -->
+						<div class="timeline timeline-left content-group">
+							<div class="timeline-container">
+								<!-- Sales stats -->
+								<div class="timeline-row">
+									<div class="timeline-icon">
+										<a href="#"><img src="assets/images/demo/users/face24.jpg" alt=""></a>
+									</div>
+									<div class="panel panel-flat timeline-content">
+										<div class="panel-heading">
+											<h6 class="panel-title">Daily statistics</h6>
+											<div class="heading-elements">
+												<span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
+												<ul class="icons-list">
+													<li><a data-action="reload"></a></li>
+												</ul>
+											</div>
+											<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+											<div class="panel-body">
+												<div class="chart-container">
+													<div class="chart has-fixed-height" id="sales" _echarts_instance_="1470923970000" style="-webkit-tap-highlight-color: transparent; -webkit-user-select: none; cursor: default; background-color: rgba(0, 0, 0, 0);"><div style="position: relative; overflow: hidden; width: 740px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1087px; height: 400px; -webkit-user-select: none;"></div><canvas width="740" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 740px; height: 400px; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="740" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 740px; height: 400px; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="740" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 740px; height: 400px; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border: 0px solid rgb(51, 51, 51); white-space: nowrap; transition: left 0.4s, top 0.4s; border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 483px; top: 118.5px; background-color: rgba(0, 0, 0, 0.8);">Sat<br>Profit : 220<br>Income : 450<br>Expenses : -230</div></div></div>
 												</div>
 											</div>
 										</div>
-										<!-- /sales stats -->
-										<!-- Date stamp -->
-										<div class="timeline-date text-muted">
-											<i class="icon-history position-left"></i> <span class="text-semibold">Monday</span>, April 18
-										</div>
-										<!-- /date stamp -->
 									</div>
+									<!-- /sales stats -->
+									<!-- Date stamp -->
+									<div class="timeline-date text-muted">
+										<i class="icon-history position-left"></i> <span class="text-semibold">Monday</span>, April 18
+									</div>
+									<!-- /date stamp -->
 								</div>
-								<!-- /timeline -->
 							</div>
-							<div class="tab-pane fade" id="photos">
-								<!-- Calendar -->
-								<div class="panel panel-flat">
-									<div class="panel-heading">
-										<h6 class="panel-title">My schedule</h6>
-										<a class="heading-elements-toggle"><i class="icon-more"></i></a>
-									</div>
-									<div class="panel-body">
-										<div class="row">
-											{% for row in pagination %}
-											<div class="col-lg-3 col-sm-6" >
-												<div class="thumbnail">
-													<div class="thumb" style="min-height: 250px;">
-														<img src="/{{row.image}}" style="height: 220px;">
-														<div class="caption-overflow" style="height: 220px;">
-															<span>
-																<a href="/{{row.image}}" data-popup="lightbox" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-plus3"></i></a>
-																<a href="#" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-link2"></i></a>
-															</span>
-														</div>
-													</div>
-													<div class="caption" >
-														<h6 class="no-margin-top text-semibold"><a href="#" class="text-default">{{ row.title }}</a> 
-															<a href="?delete={{row.id}}" class="text-muted"><i class="icon-x pull-right"></i></a>
-															<a href="/{{row.image}}" class="text-muted" download><i class="icon-download pull-right"></i></a>
-														</h6>
-														{{ row.description }}
-													</div>
-												</div>
-											</div>
-											{% endfor %}
-										</div>
-										<center>{{ knp_pagination_render(pagination) }}</center>
-									</div>
+							<!-- /timeline -->
+						</div>
+						<div class="tab-pane fade" id="photos">
+							<!-- Calendar -->
+							<div class="panel panel-flat">
+								<div class="panel-heading">
+									<h6 class="panel-title">My schedule</h6>
+									<a class="heading-elements-toggle"><i class="icon-more"></i></a>
 								</div>
-								<!-- /calendar -->
-							</div>
-							<div class="tab-pane fade" id="settings">
-								<!-- Profile info -->
-								<div class="panel panel-flat">
-									<div class="panel-heading">
-										<h6 class="panel-title">Profile information</h6>
-									</div>
-									<div class="panel-body">
-										{% for row in user %}
-										<form enctype="multipart/form-data" method="POST">
-											<div class="form-group">
-												<div class="row">
-													<div class="col-md-6">
-														<label for="username">Username</label>
-														<input type="text"  class="form-control" value="{{row.username}}" required="required" name="username" id="username" disabled="disabled">
+								<div class="panel-body">
+									<div class="row">
+										{% for row in pagination %}
+										<div class="col-lg-3 col-sm-6" >
+											<div class="thumbnail">
+												<div class="thumb" style="min-height: 250px;">
+													<img src="/{{row.image}}" style="height: 220px;">
+													<div class="caption-overflow" style="height: 220px;">
+														<span>
+															<a href="/{{row.image}}" data-popup="lightbox" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-plus3"></i></a>
+															<a href="#" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-link2"></i></a>
+														</span>
 													</div>
 												</div>
-											</div>
-											<div class="form-group">
-												<div class="row">
-													<div class="col-md-6">
-														<label for="first_name">First name</label>
-														<input type="text" class="form-control" value="{{row.first_name}}" required="required" name="first_name" id="first_name">
-													</div>
-													<div class="col-md-6">
-														<label for="last_name">Last name</label>
-														<input type="text" class="form-control" value="{{row.last_name}}" required="required" name="last_name" id="last_name">
-													</div>
+												<div class="caption" >
+													<h6 class="no-margin-top text-semibold"><a href="#" class="text-default">{{ row.title }}</a> 
+														<a href="?delete={{row.id}}" class="text-muted"><i class="icon-x pull-right"></i></a>
+														<a href="/{{row.image}}" class="text-muted" download><i class="icon-download pull-right"></i></a>
+													</h6>
+													{{ row.description }}
 												</div>
 											</div>
-											<div class="form-group">
-												<div class="row">
-													<div class="col-md-4">
-														<label for="twitter">Twitter</label>
-														<input type="text"  class="form-control" value="{{row.twitter}}" required="required" name="twitter" id="twitter">
-													</div>
-													<div class="col-md-4">
-														<label for="git">Github</label>
-														<input type="text" class="form-control" value="{{row.git}}" required="required" name="git" id="git">
-													</div>
-													<div class="col-md-4">
-														<label for="google">Google Drive</label>
-														<input type="text"  class="form-control" value="{{row.google}}" required="required" name="google" id="google">
-													</div>
-												</div>
-											</div>
-
-											<div class="text-right">
-												<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
-											</div>
-										</form>
+										</div>
 										{% endfor %}
 									</div>
+									<center>{{ knp_pagination_render(pagination) }}</center>
 								</div>
-								<!-- /profile info -->
-								<!-- /profile info -->
 							</div>
+							<!-- /calendar -->
+						</div>
+						<div class="tab-pane fade" id="settings">
+							<!-- Profile info -->
+							<div class="panel panel-flat">
+								<div class="panel-heading">
+									<h6 class="panel-title">Profile information</h6>
+								</div>
+								<div class="panel-body">
+									{% for row in user %}
+									<form enctype="multipart/form-data" method="POST">
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label for="username">Username</label>
+													<input type="text"  class="form-control" value="{{row.username}}" required="required" name="username" id="username" disabled="disabled">
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label for="first_name">First name</label>
+													<input type="text" class="form-control" value="{{row.first_name}}" required="required" name="first_name" id="first_name">
+												</div>
+												<div class="col-md-6">
+													<label for="last_name">Last name</label>
+													<input type="text" class="form-control" value="{{row.last_name}}" required="required" name="last_name" id="last_name">
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-4">
+													<label for="twitter">Twitter</label>
+													<input type="text"  class="form-control" value="{{row.twitter}}" required="required" name="twitter" id="twitter">
+												</div>
+												<div class="col-md-4">
+													<label for="git">Github</label>
+													<input type="text" class="form-control" value="{{row.git}}" required="required" name="git" id="git">
+												</div>
+												<div class="col-md-4">
+													<label for="google">Google Drive</label>
+													<input type="text"  class="form-control" value="{{row.google}}" required="required" name="google" id="google">
+												</div>
+											</div>
+										</div>
+
+										<div class="text-right">
+											<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+										</div>
+									</form>
+									{% endfor %}
+								</div>
+							</div>
+							<!-- /profile info -->
+							<!-- /profile info -->
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- /user profile -->
-			{% endblock %}
+		</div>
+		<!-- /user profile -->
+		{% endblock %}
